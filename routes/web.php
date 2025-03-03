@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,8 +21,7 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::prefix('items')->group(function () {
-    Route::get('/', [App\Http\Controllers\ItemController::class, 'index']);
-    Route::get('/add', [App\Http\Controllers\ItemController::class, 'add']);
-    Route::post('/add', [App\Http\Controllers\ItemController::class, 'add']);
-});
+// Route::prefix('items')->group(function () {});
+Route::get('/items', [App\Http\Controllers\ItemController::class, 'index'])->name('items.table');
+Route::get('/items/add', [App\Http\Controllers\ItemController::class, 'create'])->name('item.create');
+Route::post('/items/add', [App\Http\Controllers\ItemController::class, 'store'])->name('item.store');

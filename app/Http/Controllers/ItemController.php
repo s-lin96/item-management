@@ -19,7 +19,7 @@ class ItemController extends Controller
     }
 
     /**
-     * 商品一覧
+     * 商品一覧を表示
      */
     public function index()
     {
@@ -30,9 +30,17 @@ class ItemController extends Controller
     }
 
     /**
-     * 商品登録
+     * 商品登録フォームを表示
      */
-    public function add(Request $request)
+    public function create()
+    {
+        return view('item.add');
+    }
+
+    /**
+     * 商品を登録
+     */
+    public function store(Request $request)
     {
         // POSTリクエストのとき
         if ($request->isMethod('post')) {
@@ -49,7 +57,7 @@ class ItemController extends Controller
                 'detail' => $request->detail,
             ]);
 
-            return redirect('/items');
+            return to_route('items.table');
         }
 
         return view('item.add');
