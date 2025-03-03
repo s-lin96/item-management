@@ -9,21 +9,17 @@
 @section('content')
     <div class="row">
         <div class="col-md-10">
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <h4 class="alert-heading">登録に失敗しました</h4>
-                    <p>以下の項目をご確認ください</p>
-                    <hr>
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
+            @if(count($errors) > 0)
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <p>商品の登録ができませんでした。<br>入力内容をご確認ください。</p>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
             @endif
 
             <div class="card card-primary">
-                <form action="{{ route('item.store') }}" method="POST">
+                <form action="{{ route('item.store') }}" method="POST" novalidate>
                     @csrf
                     <div class="card-body">
                         <section>
@@ -33,14 +29,26 @@
                                     <select name="type" id="type" required>
                                         <option value="">-- 選択してください --</option>
                                         @foreach(config('types.types') as $id => $name)
-                                            <option value="{{ $id }}">{{ $name }}</option>
+                                            <option value="{{ $id }}" {{ old('type') == $id ? 'selected' : '' }}>
+                                                {{ $name }}
+                                            </option>
                                         @endforeach
                                     </select>
+                                    <div class="text-danger">
+                                        @if($errors->has('type'))
+                                            {{ $errors->first('type') }}<br>
+                                        @endif
+                                    </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="name">名前</label>
-                                    <input type="text" class="form-control" id="name" name="name" max="100" required>
+                                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}"  max="100" required>
+                                    <div class="text-danger">
+                                        @if($errors->has('name'))
+                                            {{ $errors->first('name') }}<br>
+                                        @endif
+                                    </div>
                                 </div>
                         </section>
                         <hr>
@@ -48,7 +56,12 @@
                             <h2>在庫情報</h2>
                                 <div class="form-group">
                                     <label for="stock">在庫数</label>
-                                    <input type="number" class="form-control" id="stock" name="stock" min="0" max="9999" required>
+                                    <input type="number" class="form-control" id="stock" name="stock" value="{{ old('stock') }}" min="0" max="9999" required>
+                                    <div class="text-danger">
+                                        @if($errors->has('stock'))
+                                            {{ $errors->first('stock') }}<br>
+                                        @endif
+                                    </div>
                                 </div>
 
                                 <div class="form-group">
@@ -56,14 +69,26 @@
                                     <select name="unit" id="unit" required>
                                         <option value="">-- 選択してください --</option>
                                         @foreach(config('units.units') as $id => $name)
-                                            <option value="{{ $id }}">{{ $name }}</option>
+                                            <option value="{{ $id }}" {{ old('unit') == $id ? 'selected' : '' }}>
+                                                {{ $name }}
+                                            </option>
                                         @endforeach
                                     </select>
+                                    <div class="text-danger">
+                                        @if($errors->has('unit'))
+                                            {{ $errors->first('unit') }}<br>
+                                        @endif
+                                    </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="safe_stock">安定在庫数</label>
-                                    <input type="number" class="form-control" id="safe_stock" name="safe_stock" min="0" max="999" required>
+                                    <input type="number" class="form-control" id="safe_stock" name="safe_stock" value="{{ old('safe_stock') }}" min="0" max="999" required>
+                                    <div class="text-danger">
+                                        @if($errors->has('safe_stock'))
+                                            {{ $errors->first('safe_stock') }}<br>
+                                        @endif
+                                    </div>
                                 </div>
                         </section>
                         <hr>
@@ -71,7 +96,12 @@
                             <h2>詳細情報</h2>
                                 <div class="form-group">
                                     <label for="detail">説明</label>
-                                    <input type="text" class="form-control" id="detail" name="detail" max="500" required>
+                                    <input type="text" class="form-control" id="detail" name="detail" value="{{ old('detail') }}" max="500" required>
+                                    <div class="text-danger">
+                                        @if($errors->has('detail'))
+                                            {{ $errors->first('detail') }}<br>
+                                        @endif
+                                    </div>
                                 </div>
                         </section>
                     </div>
