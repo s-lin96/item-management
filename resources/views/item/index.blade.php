@@ -49,7 +49,7 @@
                                     <td>{{ $item->id }}</td>
                                     <td>{{ $types[$item->type] }}</td>
                                     <td>{{ $item->name }}</td>
-                                    <td>{{ $item->stock }}</td>
+                                    <td>{{ number_format($item->stock) }}</td>
                                     <td>
                                         @if($item->stock_status === 1)
                                             <p>十分</p>

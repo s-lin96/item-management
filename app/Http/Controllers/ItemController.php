@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
-use App\Models\User;
 use Illuminate\Validation\Rule;
 
 class ItemController extends Controller
@@ -76,7 +75,7 @@ class ItemController extends Controller
      */
     public function index(Request $request)
     {
-        // 削除されていない商品と関連するユーザー情報を取得
+        // 削除されていない商品を取得
         $items = Item::where('is_deleted', '=', 1)->get();
 
         return view('item.index', [
@@ -125,10 +124,9 @@ class ItemController extends Controller
         else{
             $newStockStatus = 3;
         }
-        // dd($request);
 
         // DBに新規レコードを追加
-        // 項目セット　→　保存
+        // カラム　→　項目セット
         Item::create([
             'user_id' => Auth::user()->id,
             'type' => $validatedData['type'],
