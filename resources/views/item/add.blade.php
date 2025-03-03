@@ -78,6 +78,7 @@
 
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">登録</button>
+                        <a class="btn btn-secondary" href="{{ route('items.table') }}">キャンセル</a>
                     </div>
                 </form>
             </div>
