@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
+use App\Models\User;
 use Illuminate\Validation\Rule;
 
 class ItemController extends Controller
@@ -68,69 +69,77 @@ class ItemController extends Controller
     }
 
     /**
-     * 商品一覧を表示
+     * 商品一覧を表示（管理者向け/削除済み非表示）
+     * 
+     * @param $request
+     * @return $response
      */
-    public function index()
+    public function index(Request $request)
     {
-        // 商品一覧取得
-        $items = Item::all();
+        // 削除されていない商品と関連するユーザー情報を取得
+        $items = Item::where('is_deleted', '=', 1)->get();
 
-        return view('item.index', compact('items'));
+        return view('item.index', [
+            'items' => $items,
+            'types' => $this->types,
+            'units' => $this->units,
+        ]);
     }
 
     /**
      * 商品登録フォームを表示
+     * 
+     * @param $request
+     * @return $response
      */
-    public function create()
+    public function create(Request $request)
     {
         return view('item.add');
     }
 
     /**
      * 商品を登録
+     * 
+     * @param $request
+     * @return $response
      */
     public function store(Request $request)
     {
-        // POSTリクエストのとき
-        if ($request->isMethod('post')) {
-            // バリデーションチェック実施
-            $validatedData = $request->validate($this->validateRules, $this->validateMessages, $this->attributes);
+        // バリデーションチェック実施
+        $validatedData = $request->validate($this->validateRules, $this->validateMessages, $this->attributes);
 
-            // 在庫数が安定在庫数より多いかチェック
-            if($validatedData['stock'] <= $validatedData['safe_stock']){
-                return redirect()->route('item.create')->withErrors([
-                    'stock' => '在庫数は安定在庫数より多くなければなりません。'
-                ]);
-            }
-
-            // 新しい在庫状況を取得
-            if($validatedData['stock'] >= $validatedData['safe_stock']){
-                return $newStockStatus = 1;
-            }
-            elseif($validatedData['stock'] >= $validatedData['safe_stock'] * 0.7 && $validatedData['stock'] < $validatedData['safe_stock']){
-                return $newStockStatus = 2;
-            }
-            else{
-                return $newStockStatus = 3;
-            }
-
-            // DBに新規レコードを追加
-            // 項目セット　→　保存
-            Item::create([
-                'user_id' => Auth::user()->id,
-                'type' => $request->$validatedData['type'],
-                'name' => $request->$validatedData['name'],
-                'stock' => $request->$validatedData['stock'],
-                'unit' => $request->$validatedData['unit'],
-                'safe_stock' => $request->$validatedData['safe_stock'],
-                'stock_status' => $request->$newStockStatus,
-                'detail' => $request->$validatedData['detail'],
+        // 在庫数が安定在庫数より多いかチェック
+        if($validatedData['stock'] <= $validatedData['safe_stock']){
+            return redirect()->route('item.create')->withErrors([
+                'stock' => '在庫数は安定在庫数より多くなければなりません。'
             ]);
-
-            return to_route('items.table')
-            ->with('success', '商品を登録しました');
         }
 
-        return view('item.add');
+        // 新しい在庫状況を取得
+        if($validatedData['stock'] >= $validatedData['safe_stock']){
+            $newStockStatus = 1;
+        }
+        elseif($validatedData['stock'] >= $validatedData['safe_stock'] * 0.7 && $validatedData['stock'] < $validatedData['safe_stock']){
+            $newStockStatus = 2;
+        }
+        else{
+            $newStockStatus = 3;
+        }
+        // dd($request);
+
+        // DBに新規レコードを追加
+        // 項目セット　→　保存
+        Item::create([
+            'user_id' => Auth::user()->id,
+            'type' => $validatedData['type'],
+            'name' => $validatedData['name'],
+            'stock' => $validatedData['stock'],
+            'unit' => $validatedData['unit'],
+            'safe_stock' => $validatedData['safe_stock'],
+            'stock_status' => $newStockStatus,
+            'detail' => $validatedData['detail'],
+        ]);
+
+        return redirect()->route('items.table')->with('success', '商品を登録しました');
     }
 }

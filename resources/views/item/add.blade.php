@@ -29,7 +29,7 @@
                                     <select name="type" id="type" required>
                                         <option value="">-- 選択してください --</option>
                                         @foreach(config('types.types') as $id => $name)
-                                            <option value="{{ $id }}" {{ old('type') == $id ? 'selected' : '' }}>
+                                            <option value="{{ $id }}" {{ old('$id') == $id ? 'selected' : '' }}>
                                                 {{ $name }}
                                             </option>
                                         @endforeach
@@ -69,7 +69,7 @@
                                     <select name="unit" id="unit" required>
                                         <option value="">-- 選択してください --</option>
                                         @foreach(config('units.units') as $id => $name)
-                                            <option value="{{ $id }}" {{ old('unit') == $id ? 'selected' : '' }}>
+                                            <option value="{{ $id }}" {{ old('$id') == $id ? 'selected' : '' }}>
                                                 {{ $name }}
                                             </option>
                                         @endforeach

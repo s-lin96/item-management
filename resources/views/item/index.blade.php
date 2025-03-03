@@ -23,7 +23,7 @@
                     <div class="card-tools">
                         <div class="input-group input-group-sm">
                             <div class="input-group-append">
-                                <a href="{{ route('item.create') }}" class="btn btn-default">商品登録</a>
+                                <a href="{{ route('item.create') }}" class="btn btn-primary">商品登録</a>
                             </div>
                         </div>
                     </div>
@@ -33,18 +33,40 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>名前</th>
                                 <th>種別</th>
-                                <th>詳細</th>
+                                <th>名前</th>
+                                <th>在庫数</th>
+                                <th>在庫状況</th>
+                                <th>入出庫記録</th>
+                                <th>商品編集</th>
+                                <th>最終更新日時</th>
+                                <th>最終更新者</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($items as $item)
                                 <tr>
                                     <td>{{ $item->id }}</td>
+                                    <td>{{ $types[$item->type] }}</td>
                                     <td>{{ $item->name }}</td>
-                                    <td>{{ $item->type }}</td>
-                                    <td>{{ $item->detail }}</td>
+                                    <td>{{ $item->stock }}</td>
+                                    <td>
+                                        @if($item->stock_status === 1)
+                                            <p>十分</p>
+                                        @elseif($item->stock_status === 2)
+                                            <p><u>少なめ</u></p>
+                                        @else
+                                            <p><strong>✕ 不足</strong></p>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-warning" href="#" role="button">記録</a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-secondary" href="#" role="button">編集</a>
+                                    </td>
+                                    <td>{{ $item->updated_at }}</td>
+                                    <td>{{ $item->user->name }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
