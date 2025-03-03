@@ -11,6 +11,9 @@
         <div class="col-md-10">
             @if ($errors->any())
                 <div class="alert alert-danger">
+                    <h4 class="alert-heading">登録に失敗しました</h4>
+                    <p>以下の項目をご確認ください</p>
+                    <hr>
                     <ul>
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
@@ -23,20 +26,54 @@
                 <form action="{{ route('item.store') }}" method="POST">
                     @csrf
                     <div class="card-body">
-                        <div class="form-group">
-                            <label for="name">名前</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="名前">
-                        </div>
+                        <section>
+                            <h2>基本情報</h2>
+                                <div class="form-group">
+                                    <label for="type">種別</label>
+                                    <select name="type" id="type" required>
+                                        <option value="">-- 選択してください --</option>
+                                        @foreach(config('types.types') as $id => $name)
+                                            <option value="{{ $id }}">{{ $name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
-                        <div class="form-group">
-                            <label for="type">種別</label>
-                            <input type="text" class="form-control" id="type" name="type" placeholder="種別">
-                        </div>
+                                <div class="form-group">
+                                    <label for="name">名前</label>
+                                    <input type="text" class="form-control" id="name" name="name" max="100" required>
+                                </div>
+                        </section>
+                        <hr>
+                        <section>
+                            <h2>在庫情報</h2>
+                                <div class="form-group">
+                                    <label for="stock">在庫数</label>
+                                    <input type="number" class="form-control" id="stock" name="stock" min="0" max="9999" required>
+                                </div>
 
-                        <div class="form-group">
-                            <label for="detail">詳細</label>
-                            <input type="text" class="form-control" id="detail" name="detail" placeholder="詳細説明">
-                        </div>
+                                <div class="form-group">
+                                    <label for="unit">単位</label>
+                                    <select name="unit" id="unit" required>
+                                        <option value="">-- 選択してください --</option>
+                                        @foreach(config('units.units') as $id => $name)
+                                            <option value="{{ $id }}">{{ $name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="safe_stock">安定在庫数</label>
+                                    <input type="number" class="form-control" id="safe_stock" name="safe_stock" min="0" max="999" required>
+                                </div>
+                        </section>
+                        <hr>
+                        <section>
+                            <h2>詳細情報</h2>
+                                <div class="form-group">
+                                    <label for="detail">説明</label>
+                                    <input type="text" class="form-control" id="detail" name="detail" max="500" required>
+                                </div>
+                        </section>
                     </div>
 
                     <div class="card-footer">
