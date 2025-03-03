@@ -23,10 +23,10 @@
                     @csrf
                     <div class="card-body">
                         <section>
-                            <h2>基本情報</h2>
+                            <h4>基本情報</h4>
                                 <div class="form-group">
                                     <label for="type">種別</label>
-                                    <select name="type" id="type" required>
+                                    <select class="form-control col-md-5" name="type" id="type" required>
                                         <option value="">-- 選択してください --</option>
                                         @foreach(config('types.types') as $id => $name)
                                             <option value="{{ $id }}" {{ old('$id') == $id ? 'selected' : '' }}>
@@ -43,7 +43,7 @@
 
                                 <div class="form-group">
                                     <label for="name">名前</label>
-                                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}"  max="100" required>
+                                    <input type="text" class="form-control col-md-5" id="name" name="name" value="{{ old('name') }}"  max="100" required>
                                     <div class="text-danger">
                                         @if($errors->has('name'))
                                             {{ $errors->first('name') }}<br>
@@ -53,37 +53,38 @@
                         </section>
                         <hr>
                         <section>
-                            <h2>在庫情報</h2>
-                                <div class="form-group">
-                                    <label for="stock">在庫数</label>
-                                    <input type="number" class="form-control" id="stock" name="stock" value="{{ old('stock') }}" min="0" max="9999" required>
-                                    <div class="text-danger">
-                                        @if($errors->has('stock'))
-                                            {{ $errors->first('stock') }}<br>
-                                        @endif
+                            <h4>在庫情報</h4>
+                                <div class="form-row">
+                                    <div class="form-group col-md-5">
+                                        <label for="stock">在庫数</label>
+                                        <input type="number" class="form-control" id="stock" name="stock" value="{{ old('stock') }}" min="0" max="9999" required>
+                                        <div class="text-danger">
+                                            @if($errors->has('stock'))
+                                                {{ $errors->first('stock') }}<br>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-5">
+                                        <label for="unit">単位</label>
+                                        <select class="form-control" name="unit" id="unit" required>
+                                            <option value="">-- 選択してください --</option>
+                                            @foreach(config('units.units') as $id => $name)
+                                                <option value="{{ $id }}" {{ old('$id') == $id ? 'selected' : '' }}>
+                                                    {{ $name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <div class="text-danger">
+                                            @if($errors->has('unit'))
+                                                {{ $errors->first('unit') }}<br>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="unit">単位</label>
-                                    <select name="unit" id="unit" required>
-                                        <option value="">-- 選択してください --</option>
-                                        @foreach(config('units.units') as $id => $name)
-                                            <option value="{{ $id }}" {{ old('$id') == $id ? 'selected' : '' }}>
-                                                {{ $name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    <div class="text-danger">
-                                        @if($errors->has('unit'))
-                                            {{ $errors->first('unit') }}<br>
-                                        @endif
-                                    </div>
-                                </div>
-
                                 <div class="form-group">
                                     <label for="safe_stock">安定在庫数</label>
-                                    <input type="number" class="form-control" id="safe_stock" name="safe_stock" value="{{ old('safe_stock') }}" min="0" max="999" required>
+                                    <input type="number" class="form-control col-md-5" id="safe_stock" name="safe_stock" value="{{ old('safe_stock') }}" min="0" max="999" required>
                                     <div class="text-danger">
                                         @if($errors->has('safe_stock'))
                                             {{ $errors->first('safe_stock') }}<br>
@@ -93,10 +94,10 @@
                         </section>
                         <hr>
                         <section>
-                            <h2>詳細情報</h2>
+                            <h4>詳細情報</h4>
                                 <div class="form-group">
                                     <label for="detail">説明</label>
-                                    <input type="text" class="form-control" id="detail" name="detail" value="{{ old('detail') }}" max="500" required>
+                                    <input type="text" class="form-control col-md-10" id="detail" name="detail" value="{{ old('detail') }}" max="500" required>
                                     <div class="text-danger">
                                         @if($errors->has('detail'))
                                             {{ $errors->first('detail') }}<br>
