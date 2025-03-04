@@ -36,7 +36,7 @@
                                 <th class="text-left">種別</th>
                                 <th class="text-left">名前</th>
                                 <th class="text-right">在庫数</th>
-                                <th class="text-right">在庫状況</th>
+                                <th class="text-center">在庫状況</th>
                                 <th class="text-center">最終更新日時</th>
                                 <th class="text-center">最終更新者</th>
                                 <th class="text-center">入出庫記録</th>
@@ -50,13 +50,13 @@
                                     <td class="text-left">{{ $types[$item->type] }}</td>
                                     <td class="text-left">{{ $item->name }}</td>
                                     <td class="text-right">{{ number_format($item->stock) }}</td>
-                                    <td class="text-right">
+                                    <td class="text-center">
                                         @if($item->stock_status === 1)
-                                            <p>十分</p>
+                                            <span class="badge badge-primary">十 分</span>
                                         @elseif($item->stock_status === 2)
-                                            <p><u>少なめ</u></p>
+                                            <span class="badge badge-warning">少なめ</span>
                                         @else
-                                            <p><strong>✕ 不足</strong></p>
+                                            <span class="badge badge-danger">不 足</span>
                                         @endif
                                     </td>
                                     <td class="text-center">{{ $item->updated_at }}</td>

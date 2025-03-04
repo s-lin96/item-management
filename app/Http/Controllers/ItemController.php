@@ -108,9 +108,11 @@ class ItemController extends Controller
 
         // 在庫数が安定在庫数より多いかチェック
         if($validatedData['stock'] <= $validatedData['safe_stock']){
-            return redirect()->route('item.create')->withErrors([
-                'stock' => '在庫数は安定在庫数より多くなければなりません。'
-            ]);
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'stock' => '在庫数は安定在庫数より多くなければなりません。'
+                ]);
         }
 
         // 新しい在庫状況を取得
