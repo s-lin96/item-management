@@ -9,8 +9,8 @@
 @section('content')
     <div class="row">
         @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>{{ session('success') }}</strong>
+            <div class="alert alert-success alert-dismissible fade show w-100 text-center" role="alert">
+                <i class="fas fa-check-circle" aria-hidden="true"></i> {{ session('success') }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -62,10 +62,14 @@
                                     <td class="text-center">{{ $item->updated_at }}</td>
                                     <td class="text-center">{{ $item->user->name }}</td>
                                     <td class="text-center">
-                                        <a class="btn btn-warning" href="#" role="button">記録</a>
+                                        <a class="btn btn-warning" href="#" role="button" aria-label="入出庫記録フォームへ遷移">
+                                            <i class="fa fa-calculator" ></i>
+                                        </a>
                                     </td>
                                     <td class="text-center">
-                                        <a class="btn btn-secondary" href="#" role="button">編集</a>
+                                        <a class="btn btn-secondary" href="#" role="button" aria-label="商品編集フォームへ遷移">
+                                            <i class="fa fa-pen"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach

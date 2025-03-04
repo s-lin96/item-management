@@ -139,6 +139,6 @@ class ItemController extends Controller
             'detail' => $validatedData['detail'],
         ]);
 
-        return redirect()->route('items.table')->with('success', '商品を登録しました');
+        return redirect()->route('items.table')->with('success', '商品が正常に登録されました。');
     }
 }
