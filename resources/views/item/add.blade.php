@@ -23,8 +23,8 @@
                     @csrf
                     <div class="card-body">
                         <section>
-                            <h4>基本情報</h4>
-                                <div class="form-group">
+                            <h4 class="mb-3">基本情報</h4>
+                                <div class="form-group mx-4">
                                     <label for="type">種別</label>
                                     <select class="form-control col-md-5" name="type" id="type" required>
                                         <option value="">-- 選択してください --</option>
@@ -41,7 +41,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group mx-4">
                                     <label for="name">名前</label>
                                     <input type="text" class="form-control col-md-5" id="name" name="name" value="{{ old('name') }}"  max="100" required>
                                     <div class="text-danger">
@@ -53,9 +53,9 @@
                         </section>
                         <hr>
                         <section>
-                            <h4>在庫情報</h4>
+                            <h4 class="mb-3">在庫情報</h4>
                                 <div class="form-row">
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group col-md-5 mx-4">
                                         <label for="stock">在庫数</label>
                                         <input type="number" class="form-control" id="stock" name="stock" value="{{ old('stock') }}" min="0" max="9999" required>
                                         <div class="text-danger">
@@ -65,7 +65,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group col-md-5 mx-4">
                                         <label for="unit">単位</label>
                                         <select class="form-control" name="unit" id="unit" required>
                                             <option value="">-- 選択してください --</option>
@@ -82,7 +82,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+
+                                <div class="form-group mx-4">
                                     <label for="safe_stock">安定在庫数</label>
                                     <input type="number" class="form-control col-md-5" id="safe_stock" name="safe_stock" value="{{ old('safe_stock') }}" min="0" max="999" required>
                                     <div class="text-danger">
@@ -94,10 +95,10 @@
                         </section>
                         <hr>
                         <section>
-                            <h4>詳細情報</h4>
-                                <div class="form-group">
+                            <h4 class="mb-3">詳細情報</h4>
+                                <div class="form-group mx-4">
                                     <label for="detail">説明</label>
-                                    <input type="text" class="form-control col-md-10" id="detail" name="detail" value="{{ old('detail') }}" max="500" required>
+                                    <textarea class="form-control col-md-10" id="detail" name="detail" value="{{ old('detail') }}" cols="50" rows="10" max="500" required></textarea>
                                     <div class="text-danger">
                                         @if($errors->has('detail'))
                                             {{ $errors->first('detail') }}<br>
@@ -107,9 +108,9 @@
                         </section>
                     </div>
 
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">登録</button>
-                        <a class="btn btn-secondary" href="{{ route('items.table') }}">キャンセル</a>
+                    <div class="card-footer text-center">
+                            <button type="submit" class="btn btn-primary col-2 mx-2">登録</button>
+                            <a class="btn btn-secondary col-2 mx-2" href="{{ route('items.table') }}">キャンセル</a>
                     </div>
                 </form>
             </div>
