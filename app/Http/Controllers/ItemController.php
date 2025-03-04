@@ -78,7 +78,7 @@ class ItemController extends Controller
         // 削除されていない商品を取得
         $items = Item::where('is_deleted', '=', 1)->get();
 
-        return view('item.index', [
+        return view('item.admin.index', [
             'items' => $items,
             'types' => $this->types,
         ]);
@@ -92,7 +92,7 @@ class ItemController extends Controller
      */
     public function create(Request $request)
     {
-        return view('item.add');
+        return view('item.admin.add');
     }
 
     /**
