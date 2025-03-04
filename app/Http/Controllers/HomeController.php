@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Item;
 
 class HomeController extends Controller
 {
+    protected $types;
+    protected $units;
+
     /**
      * Create a new controller instance.
      *
@@ -14,6 +18,10 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
+        // 設定ファイル（種別・単位）の値をコンストラクタで取得
+        $this->types = array_keys(config('types.types'));
+        $this->units = array_keys(config('units.units'));
     }
 
     /**
@@ -24,5 +32,22 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+
+    /**
+     * 商品一覧を表示(共通)
+     *
+     * @param $request
+     * @return $response
+     */
+    public function showItemsTable(Request $request)
+    {
+        // 削除されていない商品を取得
+        $items = Item::where('is_deleted', '=', 1)->get();
+
+        return view('item.index', [
+            'items' => $items,
+            'types' => $this->types,
+        ]);
     }
 }

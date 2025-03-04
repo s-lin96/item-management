@@ -31,7 +31,7 @@ Route::post('/items/admin/add', [App\Http\Controllers\ItemController::class, 'st
  * bladeファイル未作成
  */
 // 共通画面
-Route::get('/items', [App\Http\Controllers\HomeController::class, 'index'])->name('items.table.readonly');
+Route::get('/items', [App\Http\Controllers\HomeController::class, 'showItemsTable'])->name('items.table.readonly');
 Route::get('/items/detail', [App\Http\Controllers\HomeController::class, 'showDetail'])->name('item.detail');
 // 管理者ユーザーのみアクセス可
 Route::get('/items/admin/edit-detail/{id}', [App\Http\Controllers\ItemController::class, 'showItemEdit'])->name('item.edit'); // 商品編集
