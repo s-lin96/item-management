@@ -39,7 +39,12 @@ class Item extends Model
     protected $casts = [
     ];
 
-    public function user(){
+    /**
+     * 商品を保持するユーザー
+     *
+     */
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }
