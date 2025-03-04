@@ -81,7 +81,6 @@ class ItemController extends Controller
         return view('item.index', [
             'items' => $items,
             'types' => $this->types,
-            'units' => $this->units,
         ]);
     }
 

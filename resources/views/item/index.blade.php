@@ -29,28 +29,28 @@
                     </div>
                 </div>
                 <div class="card-body table-responsive p-0">
-                    <table class="table table-hover text-nowrap text-center">
+                    <table class="table table-hover text-nowrap">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>種別</th>
-                                <th>名前</th>
-                                <th>在庫数</th>
-                                <th>在庫状況</th>
-                                <th>入出庫記録</th>
-                                <th>商品編集</th>
-                                <th>最終更新日時</th>
-                                <th>最終更新者</th>
+                                <th class="text-right">ID</th>
+                                <th class="text-left">種別</th>
+                                <th class="text-left">名前</th>
+                                <th class="text-right">在庫数</th>
+                                <th class="text-right">在庫状況</th>
+                                <th class="text-center">最終更新日時</th>
+                                <th class="text-center">最終更新者</th>
+                                <th class="text-center">入出庫記録</th>
+                                <th class="text-center">商品編集</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($items as $item)
                                 <tr>
-                                    <td>{{ $item->id }}</td>
-                                    <td>{{ $types[$item->type] }}</td>
-                                    <td>{{ $item->name }}</td>
-                                    <td>{{ number_format($item->stock) }}</td>
-                                    <td>
+                                    <td class="text-right">{{ $item->id }}</td>
+                                    <td class="text-left">{{ $types[$item->type] }}</td>
+                                    <td class="text-left">{{ $item->name }}</td>
+                                    <td class="text-right">{{ number_format($item->stock) }}</td>
+                                    <td class="text-right">
                                         @if($item->stock_status === 1)
                                             <p>十分</p>
                                         @elseif($item->stock_status === 2)
@@ -59,14 +59,14 @@
                                             <p><strong>✕ 不足</strong></p>
                                         @endif
                                     </td>
-                                    <td>
+                                    <td class="text-center">{{ $item->updated_at }}</td>
+                                    <td class="text-center">{{ $item->user->name }}</td>
+                                    <td class="text-center">
                                         <a class="btn btn-warning" href="#" role="button">記録</a>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <a class="btn btn-secondary" href="#" role="button">編集</a>
                                     </td>
-                                    <td>{{ $item->updated_at }}</td>
-                                    <td>{{ $item->user->name }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
