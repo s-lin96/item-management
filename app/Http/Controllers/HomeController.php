@@ -20,8 +20,8 @@ class HomeController extends Controller
         $this->middleware('auth');
 
         // 設定ファイル（種別・単位）の値をコンストラクタで取得
-        $this->types = array_keys(config('types.types'));
-        $this->units = array_keys(config('units.units'));
+        $this->types = config('types.types');
+        $this->units = config('units.units');
     }
 
     /**
@@ -35,7 +35,7 @@ class HomeController extends Controller
     }
 
     /**
-     * 商品一覧を表示(共通)
+     * 商品一覧を表示(管理者・一般ユーザー共用)
      *
      * @param $request
      * @return $response

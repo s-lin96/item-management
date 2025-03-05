@@ -25,8 +25,8 @@ class ItemController extends Controller
         $this->middleware('auth');
 
         // 設定ファイル（種別・単位）の値をコンストラクタで取得
-        $this->types = array_keys(config('types.types'));
-        $this->units = array_keys(config('units.units'));
+        $this->types = config('types.types');
+        $this->units = config('units.units');
 
         // バリデーションルール
         $this->validateRules = [
@@ -106,8 +106,9 @@ class ItemController extends Controller
         // バリデーションチェック実施
         $validatedData = $request->validate($this->validateRules, $this->validateMessages, $this->attributes);
 
-        // 在庫数が安定在庫数より多いかチェック
+        // 在庫数が安定在庫数より小さければ
         if($validatedData['stock'] <= $validatedData['safe_stock']){
+            // 商品登録へリダイレクト
             return back()
                 ->withInput()
                 ->withErrors([
@@ -127,7 +128,7 @@ class ItemController extends Controller
         }
 
         // DBに新規レコードを追加
-        // カラム　→　項目セット
+        // カラム → バリデーション済み入力値をセット
         Item::create([
             'user_id' => Auth::user()->id,
             'type' => $validatedData['type'],
@@ -138,7 +139,7 @@ class ItemController extends Controller
             'stock_status' => $newStockStatus,
             'detail' => $validatedData['detail'],
         ]);
-
+        // 商品一覧（管理者向け）へリダイレクト
         return redirect()->route('items.table')->with('success', '商品が正常に登録されました。');
     }
 }
