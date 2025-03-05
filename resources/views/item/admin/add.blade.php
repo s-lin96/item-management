@@ -9,6 +9,7 @@
 @section('content')
     <div class="row">
         <div class="col-md-10">
+            <!-- フラッシュメッセージを表示：エラー発生時 -->
             @if(count($errors) > 0)
                 <div class="alert alert-danger alert-dismissible fade show mx-auto text-center" role="alert">
                     <i class="fa fa-exclamation-circle" aria-hidden="true"></i> 登録に失敗しました。入力欄のエラーををご確認ください。
@@ -19,6 +20,7 @@
             @endif
 
             <div class="card card-primary">
+                <!-- 商品登録フォーム -->
                 <form action="{{ route('item.store') }}" method="POST" novalidate>
                     @csrf
                     <div class="card-body">
@@ -37,6 +39,7 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    <!-- エラーの詳細を表示 -->
                                     <div class="text-danger">
                                         @if($errors->has('type'))
                                             {{ $errors->first('type') }}<br>
@@ -50,6 +53,7 @@
                                         <span class="badge border border-danger text-danger">必須</span>
                                     </label>
                                     <input type="text" class="form-control col-md-5" id="name" name="name" value="{{ old('name') }}" placeholder="1~100文字で入力してください" max="100" required>
+                                    <!-- エラーの詳細を表示 -->
                                     <div class="text-danger">
                                         @if($errors->has('name'))
                                             {{ $errors->first('name') }}<br>
@@ -67,6 +71,7 @@
                                             <span class="badge border border-danger text-danger">必須</span>
                                         </label>
                                         <input type="number" class="form-control" id="stock" name="stock" value="{{ old('stock') }}" placeholder="1~4桁の数字を入力してください" min="0" max="9999" required>
+                                        <!-- エラーの詳細を表示 -->
                                         <div class="text-danger">
                                             @if($errors->has('stock'))
                                                 {{ $errors->first('stock') }}<br>
@@ -87,6 +92,7 @@
                                                 </option>
                                             @endforeach
                                         </select>
+                                        <!-- エラーの詳細を表示 -->
                                         <div class="text-danger">
                                             @if($errors->has('unit'))
                                                 {{ $errors->first('unit') }}<br>
@@ -100,6 +106,7 @@
                                         <span class="badge border border-danger text-danger">必須</span>
                                     </label>
                                     <input type="number" class="form-control" id="safe_stock" name="safe_stock" value="{{ old('safe_stock') }}" placeholder="1~3桁の数字を入力してください" min="0" max="999" required>
+                                    <!-- エラーの詳細を表示 -->
                                     <div class="text-danger">
                                         @if($errors->has('safe_stock'))
                                             {{ $errors->first('safe_stock') }}<br>
@@ -117,6 +124,7 @@
                                         <span class="badge border border-danger text-danger">必須</span>
                                     </label>
                                     <textarea class="form-control col-md-10" id="detail" name="detail" placeholder="1~500文字で入力してください" cols="50" rows="10" max="500" required>{{ old('detail') }}</textarea>
+                                    <!-- エラーの詳細を表示 -->
                                     <div class="text-danger">
                                         @if($errors->has('detail'))
                                             {{ $errors->first('detail') }}<br>
@@ -126,6 +134,7 @@
                         </section>
                     </div>
 
+                    <!-- 送信 & キャンセル -->
                     <div class="card-footer text-center">
                             <button type="submit" class="btn btn-primary col-2 mx-2">登録</button>
                             <a class="btn btn-secondary col-2 mx-2" href="{{ route('items.table') }}">キャンセル</a>

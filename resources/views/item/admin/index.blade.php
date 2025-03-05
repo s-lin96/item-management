@@ -8,6 +8,7 @@
 
 @section('content')
     <div class="row">
+        <!-- フラッシュメッセージを表示：商品の登録・編集、入出庫の記録が完了時 -->
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show w-100 text-center" role="alert">
                 <i class="fas fa-check-circle" aria-hidden="true"></i> {{ session('success') }}
@@ -47,7 +48,7 @@
                             @foreach ($items as $item)
                                 <tr>
                                     <td class="text-right">{{ $item->id }}</td>
-                                    <td class="text-left">{{ $types[$item->type] }}</td>
+                                    <td class="text-left">{{ $types[$item->type] ?? '不明' }}</td>
                                     <td class="text-left">{{ $item->name }}</td>
                                     <td class="text-right">{{ number_format($item->stock) }}</td>
                                     <td class="text-center">

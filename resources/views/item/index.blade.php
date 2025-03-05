@@ -31,7 +31,7 @@
                             @foreach ($items as $item)
                                 <tr>
                                     <td class="text-right">{{ $item->id }}</td>
-                                    <td class="text-left">{{ $types[$item->type] }}</td>
+                                    <td class="text-left">{{ $types[$item->type] ?? '不明' }}</td>
                                     <td class="text-left">{{ $item->name }}</td>
                                     <td class="text-right">{{ number_format($item->stock) }}</td>
                                     <td class="text-center">
