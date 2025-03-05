@@ -71,6 +71,7 @@ class ItemController extends Controller
      * 商品一覧を表示（管理者向け/削除済み非表示）
      * 
      * @param $request
+     * 
      * @return $response
      */
     public function index(Request $request)
@@ -87,6 +88,7 @@ class ItemController extends Controller
      * 商品登録フォームを表示
      * 
      * @param $request
+     * 
      * @return $response
      */
     public function create(Request $request)
@@ -98,6 +100,7 @@ class ItemController extends Controller
      * 商品を登録
      * 
      * @param $request
+     * 
      * @return $response
      */
     public function store(Request $request)
@@ -147,6 +150,7 @@ class ItemController extends Controller
      * 商品編集フォームを表示
      * 
      * @param $id
+     * 
      * @return $response
      */
     public function showItemEdit($id)
@@ -169,6 +173,7 @@ class ItemController extends Controller
      * 
      * @param $request
      * @param $id
+     * 
      * @return $response
      */
     public function updateItem(Request $request, $id)
@@ -201,21 +206,22 @@ class ItemController extends Controller
         $item->stock_status = $newStockStatus;
         $item->unit = $validatedData['unit'];
         $item->detail = $validatedData['detail'];
-        // 変更のある値のみを保存
+        // 変更を保存
         $item->save();
 
         // 商品一覧（管理者向け）へリダイレクト
-        return redirect()->route('items.table');
+        return redirect()->route('items.table')
+            ->with('success', '商品が正常に更新されました。');
     }
 
     /**
      * 商品を削除(論理削除)
      * 
-     * @param $request
      * @param $id
+     * 
      * @return $response
      */
-    public function delete(Request $request, $id)
+    public function delete($id)
     {
         // idから削除対象の商品レコードを取得
         $item = Item::where('id', '=', $id)->first();
@@ -228,6 +234,6 @@ class ItemController extends Controller
 
         // 商品一覧(管理者向け)へリダイレクト
         return redirect()->route('items.table')
-            ->with('success', '商品が正常に削除されました');
+            ->with('success', '商品が正常に削除されました。');
     }
 }
