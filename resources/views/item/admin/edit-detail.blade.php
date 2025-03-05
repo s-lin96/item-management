@@ -1,18 +1,27 @@
 @extends('adminlte::page')
 
-@section('title', '商品登録')
+@section('title', '商品編集')
 
 @section('content_header')
-    <h1>商品登録</h1>
+    <h1>商品ID: {{ $item->id }} の編集</h1>
 @stop
 
 @section('content')
     <div class="row">
         <div class="col-md-10">
-            <!-- フラッシュメッセージを表示：エラー発生時 -->
+            <!-- フラッシュメッセージを表示：バリデーションエラー -->
             @if(count($errors) > 0)
                 <div class="alert alert-danger alert-dismissible fade show mx-auto text-center" role="alert">
-                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> 登録に失敗しました。入力欄のエラーををご確認ください。
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> 更新に失敗しました。入力欄のエラーををご確認ください。
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+            <!-- フラッシュメッセージを表示：その他のエラー -->
+            @if(session('failure'))
+                <div class="alert alert-danger alert-dismissible fade show mx-auto text-center" role="alert">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ session('failure') }}
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -20,8 +29,8 @@
             @endif
 
             <div class="card card-primary">
-                <!-- 商品登録フォーム -->
-                <form action="{{ route('item.store') }}" method="POST" novalidate>
+                <!-- 商品編集フォーム -->
+                <form action="{{ route('item.update', $item->id ) }}" method="POST" novalidate>
                     @csrf
                     <div class="card-body">
                         <section>
@@ -34,7 +43,7 @@
                                     <select class="form-control col-md-5" name="type" id="type" required>
                                         <option value="">-- 選択してください --</option>
                                         @foreach(config('types.types') as $id => $name)
-                                            <option value="{{ $id }}" @if(old('type')==$id) selected @endif>
+                                            <option value="{{ $id }}" @if(old('type', $item->type)==$id) selected @endif>
                                                 {{ $name }}
                                             </option>
                                         @endforeach
@@ -52,7 +61,7 @@
                                         名前
                                         <span class="badge border border-danger text-danger">必須</span>
                                     </label>
-                                    <input type="text" class="form-control col-md-5" id="name" name="name" value="{{ old('name') }}" placeholder="1~100文字で入力してください" max="100" required>
+                                    <input type="text" class="form-control col-md-5" id="name" name="name" value="{{ old('name', $item->name) }}" placeholder="1~100文字で入力してください" max="100" required>
                                     <!-- エラーの詳細を表示 -->
                                     <div class="text-danger">
                                         @if($errors->has('name'))
@@ -65,18 +74,11 @@
                         <section>
                             <h4 class="mb-3">在庫情報</h4>
                                 <div class="form-row">
-                                    <div class="form-group col-md-5 mx-4">
+                                    <div class="col-md-5 mx-4">
                                         <label for="stock">
                                             在庫数
-                                            <span class="badge border border-danger text-danger">必須</span>
                                         </label>
-                                        <input type="number" class="form-control" id="stock" name="stock" value="{{ old('stock') }}" placeholder="1~4桁の数字を入力してください" min="0" max="9999" required>
-                                        <!-- エラーの詳細を表示 -->
-                                        <div class="text-danger">
-                                            @if($errors->has('stock'))
-                                                {{ $errors->first('stock') }}<br>
-                                            @endif
-                                        </div>
+                                        <p>{{ $item->stock }}</p>  
                                     </div>
 
                                     <div class="form-group col-md-5 mx-4">
@@ -87,7 +89,7 @@
                                         <select class="form-control" name="unit" id="unit" required>
                                             <option value="">-- 選択してください --</option>
                                             @foreach(config('units.units') as $id => $name)
-                                                <option value="{{ $id }}" @if(old('unit')==$id) selected @endif>
+                                                <option value="{{ $id }}" @if(old('unit', $item->unit)==$id) selected @endif>
                                                     {{ $name }}
                                                 </option>
                                             @endforeach
@@ -105,7 +107,7 @@
                                         安定在庫数
                                         <span class="badge border border-danger text-danger">必須</span>
                                     </label>
-                                    <input type="number" class="form-control" id="safe_stock" name="safe_stock" value="{{ old('safe_stock') }}" placeholder="1~3桁の数字を入力してください" min="0" max="999" required>
+                                    <input type="number" class="form-control" id="safe_stock" name="safe_stock" value="{{ old('safe_stock', $item->safe_stock) }}" placeholder="1~3桁の数字を入力してください" min="0" max="999" required>
                                     <!-- エラーの詳細を表示 -->
                                     <div class="text-danger">
                                         @if($errors->has('safe_stock'))
@@ -123,7 +125,7 @@
                                         説明
                                         <span class="badge border border-danger text-danger">必須</span>
                                     </label>
-                                    <textarea class="form-control col-md-10" id="detail" name="detail" placeholder="1~500文字で入力してください" cols="50" rows="10" max="500" required>{{ old('detail') }}</textarea>
+                                    <textarea class="form-control col-md-10" id="detail" name="detail" placeholder="1~500文字で入力してください" cols="50" rows="10" max="500" required>{{ old('detail', $item->detail) }}</textarea>
                                     <!-- エラーの詳細を表示 -->
                                     <div class="text-danger">
                                         @if($errors->has('detail'))
@@ -134,10 +136,11 @@
                         </section>
                     </div>
 
-                    <!-- 送信 & キャンセル -->
+                    <!-- 更新 & キャンセル -->
                     <div class="card-footer text-center">
-                            <button type="submit" class="btn btn-primary col-2 mx-2">登録</button>
+                            <button type="submit" class="btn btn-primary col-2 mx-2">更新</button>
                             <a class="btn btn-secondary col-2 mx-2" href="{{ route('items.table') }}">キャンセル</a>
+                            <!-- TODO：削除ボタンを追加する -->
                     </div>
                 </form>
             </div>

@@ -142,4 +142,25 @@ class ItemController extends Controller
         // 商品一覧（管理者向け）へリダイレクト
         return redirect()->route('items.table')->with('success', '商品が正常に登録されました。');
     }
+
+    /**
+     * 商品編集フォームを表示
+     * 
+     * @param $id
+     * @return $response
+     */
+    public function showItemEdit($id)
+    {
+        // idから商品レコードを取得
+        $item = Item::where('id', '=', $id)->first();
+
+        // 該当するidの商品レコードがなかったら
+        if(!$item){
+            return redirect()->route('items.table')
+                ->with('failure', '商品が見つかりませんでした。');
+        }
+
+        // 商品編集フォームを表示
+        return view('item.admin.edit-detail', compact('item'));
+    }
 }
