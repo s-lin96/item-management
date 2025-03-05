@@ -35,7 +35,7 @@ Route::get('/items', [App\Http\Controllers\HomeController::class, 'showItemsTabl
 Route::get('/items/detail', [App\Http\Controllers\HomeController::class, 'showDetail'])->name('item.detail');
 // 管理者ユーザーのみアクセス可
 Route::get('/items/admin/edit-detail/{id}', [App\Http\Controllers\ItemController::class, 'showItemEdit'])->name('item.edit'); // 商品編集
-Route::post('/items/admin/edit-detail', [App\Http\Controllers\ItemController::class, 'updateItem'])->name('item.update');
+Route::post('/items/admin/edit-detail/{id}', [App\Http\Controllers\ItemController::class, 'updateItem'])->name('item.update');
 Route::get('/items/admin/delete/{id}', [App\Http\Controllers\ItemController::class, 'delete'])->name('item.delete'); // 商品論理削除
 Route::get('/items/admin/record-stock/{id}', [App\Http\Controllers\ItemController::class, 'showStockRecord'])->name('stock.record'); // 入出庫記録
 Route::post('/items/admin/record-stock', [App\Http\Controllers\ItemController::class, 'updateStock'])->name('stock.update');

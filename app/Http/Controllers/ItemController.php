@@ -27,13 +27,13 @@ class ItemController extends Controller
         // 設定ファイル（種別・単位）の値をコンストラクタで取得
         $this->types = config('types.types');
         $this->units = config('units.units');
-
+        // dd($this->types, $this->units);
         // バリデーションルール
         $this->validateRules = [
-            'type' => ['bail', 'required', Rule::in($this->types)],
+            'type' => ['bail', 'required', Rule::in(array_keys($this->types))],
             'name' => ['bail', 'required', 'string', 'max:100'],
             'stock' => ['bail', 'required', 'numeric', 'digits_between:1,4'],
-            'unit' => ['bail', 'required', Rule::in($this->units)],
+            'unit' => ['bail', 'required', Rule::in(array_keys($this->units))],
             'safe_stock' => ['bail', 'required', 'numeric', 'digits_between:1,3'],
             'detail' => ['bail', 'required', 'string', 'max:500']
         ];
@@ -106,9 +106,10 @@ class ItemController extends Controller
         // バリデーションチェック実施
         $validatedData = $request->validate($this->validateRules, $this->validateMessages, $this->attributes);
 
+        // 【処理を再検討する！】そもそも安定在庫数より大きい場合は在庫状況は必ず“十分”になる？
         // 在庫数が安定在庫数より小さければ
-        if($validatedData['stock'] <= $validatedData['safe_stock']){
-            // 商品登録へリダイレクト
+        if($validatedData['stock'] < $validatedData['safe_stock']){
+            // 商品登録フォームへリダイレクト
             return back()
                 ->withInput()
                 ->withErrors([
@@ -162,5 +163,49 @@ class ItemController extends Controller
 
         // 商品編集フォームを表示
         return view('item.admin.edit-detail', compact('item'));
+    }
+
+    /**
+     * 商品の編集内容を更新
+     * 
+     * @param $request
+     * @param $id
+     * @return $response
+     */
+    public function updateItem(Request $request, $id)
+    {
+        // idから更新対象の商品レコードを取得
+        $item = Item::where('id', '=', $id)->first();
+
+        // バリデーションのチェック項目から在庫(stock)を外す
+        $validateRules = $this->validateRules;
+        unset($validateRules['stock']);
+        // バリデーションチェックを実施
+        $validatedData = $request->validate($validateRules, $this->validateMessages, $this->attributes);
+
+        // 新しい在庫状況を取得
+        if($item->stock >= $validatedData['safe_stock']){
+            $newStockStatus = 1;
+        }
+        elseif($item->stock >= $validatedData['safe_stock'] * 0.7 && $item->stock < $validatedData['safe_stock']){
+            $newStockStatus = 2;
+        }
+        else{
+            $newStockStatus = 3;
+        }
+
+        // カラム名 -> バリデーション済み入力値をセット
+        $item->user_id = Auth::id(); 
+        $item->type = $validatedData['type'];
+        $item->name = $validatedData['name']; 
+        $item->safe_stock = $validatedData['safe_stock'];
+        $item->stock_status = $newStockStatus;
+        $item->unit = $validatedData['unit'];
+        $item->detail = $validatedData['detail'];
+        // 変更のある値のみを保存
+        $item->save();
+
+        // 商品一覧（管理者向け）へリダイレクト
+        return redirect()->route('items.table');
     }
 }
