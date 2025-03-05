@@ -46,7 +46,7 @@
                                     <td class="text-center">{{ $item->updated_at }}</td>
                                     <td class="text-center">{{ $item->user->name }}</td>
                                     <td class="text-center">
-                                        <a href="{{ route('item.detail') }}">≻ 詳細情報を見る</a>
+                                        <a href="{{ route('item.detail, $item->id') }}">≻ 詳細情報を見る</a>
                                     </td>
                                 </tr>
                             @endforeach
