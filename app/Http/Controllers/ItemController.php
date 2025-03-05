@@ -207,4 +207,27 @@ class ItemController extends Controller
         // 商品一覧（管理者向け）へリダイレクト
         return redirect()->route('items.table');
     }
+
+    /**
+     * 商品を削除(論理削除)
+     * 
+     * @param $request
+     * @param $id
+     * @return $response
+     */
+    public function delete(Request $request, $id)
+    {
+        // idから削除対象の商品レコードを取得
+        $item = Item::where('id', '=', $id)->first();
+
+        // 削除フラグを更新
+        $item->user_id = Auth::id();
+        $item->is_deleted = 0;
+        // 変更を保存
+        $item->save();
+
+        // 商品一覧(管理者向け)へリダイレクト
+        return redirect()->route('items.table')
+            ->with('success', '商品が正常に削除されました');
+    }
 }
