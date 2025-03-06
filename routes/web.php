@@ -40,7 +40,8 @@ Route::post('/items/admin/record-stock/{id}', [App\Http\Controllers\ItemControll
  * bladeファイル未作成
  */
 // 管理者ユーザーのみアクセス可
-Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.table'); // ユーザー管理
-Route::get('/users/{id}', [App\Http\Controllers\UserController::class, 'showUserEdit'])->name('user.edit'); // ユーザー編集
+Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.table'); // ユーザー管理(削除済み非表示)
+Route::get('/users/show-deleted', [App\Http\Controllers\UserController::class, 'showDeleted'])->name('deleted.users.show'); // ユーザー管理(削除済み表示)
+Route::get('/users/edit-user/{id}', [App\Http\Controllers\UserController::class, 'showUserEdit'])->name('user.edit'); // ユーザー編集
+Route::post('/users/edit-user/{id}', [App\Http\Controllers\UserController::class, 'updateUser'])->name('user.update');
 Route::get('/users/delete/{id}', [App\Http\Controllers\UserController::class, 'delete'])->name('user.delete'); // ユーザー論理削除
-Route::post('/users/{id}', [App\Http\Controllers\UserController::class, 'updateUser'])->name('user.update');
