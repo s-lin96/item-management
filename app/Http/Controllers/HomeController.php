@@ -47,6 +47,29 @@ class HomeController extends Controller
         // 種別リストをセット
         $types = $this->types;
 
-        return view('item.admin.index', compact('items', 'types'));;
+        return view('item.index', compact('items', 'types'));;
+    }
+
+    /**
+     * 商品詳細を表示(管理者・一般ユーザー共用)
+     *
+     * @param $id
+     * @return $response
+     */
+    public function showDetail($id)
+    {
+        $item = Item::where('id', '=', $id)->first();
+
+        // 該当するidの商品レコードがなかったら
+        if(!$item){
+            return redirect()->route('items.table.readonly')
+                ->with('failure', '商品が見つかりませんでした。');
+        }
+
+        // 種別 & 単位リストをセット
+        $types = $this->types;
+        $units = $this->units;
+
+        return view('item.detail', compact('item', 'types', 'units'));
     }
 }
