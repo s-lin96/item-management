@@ -35,7 +35,9 @@ class ItemController extends Controller
             'stock' => ['bail', 'required', 'numeric', 'digits_between:1,4'],
             'unit' => ['bail', 'required', Rule::in(array_keys($this->units))],
             'safe_stock' => ['bail', 'required', 'numeric', 'digits_between:1,3'],
-            'detail' => ['bail', 'required', 'string', 'max:500']
+            'detail' => ['bail', 'required', 'string', 'max:500'],
+            'recordType' => ['bail', 'required', 'string'],
+            'quantity' => ['bail', 'required', 'numeric', 'digits_between:1,4']
         ];
 
         // バリデーションメッセージ
@@ -54,6 +56,11 @@ class ItemController extends Controller
             'detail.required' => ':attribute は必須項目です。',
             'detail.string' => ':attribute は文字列で入力してください。',
             'detail.max' => ':attribute は最大 :max 文字です。',
+            'recordType.required' => ':attribute は必須項目です。',
+            'recordType.string' => ':attribute は文字列で入力してください。',
+            'quantity.required' => ':attribute は必須項目です。',
+            'quantity.numeric' => ':attribute は数字で入力してください。',
+            'quantity.digits_between' => ':attribute は :min ～ :max 桁で入力してください。',
         ];
 
         // 属性
@@ -64,6 +71,8 @@ class ItemController extends Controller
             'unit' => '単位',
             'safe_stock' => '安全在庫数',
             'detail' => '詳細',
+            'recordType' => '入庫 / 出庫',
+            'quantity' => '数量',
         ];
     }
 
@@ -122,8 +131,14 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
+        // バリデーションルールから不要なチェック項目を破棄
+        $validateRules = $this->validateRules;
+        $removeKeys = ['recordType', 'quantity'];
+        foreach($removeKeys as $key){
+            unset($validateRules[$key]);
+        }
         // バリデーションチェック実施
-        $validatedData = $request->validate($this->validateRules, $this->validateMessages, $this->attributes);
+        $validatedData = $request->validate($validateRules, $this->validateMessages, $this->attributes);
 
         // 【処理を再検討する！】そもそも安定在庫数より大きい場合は在庫状況は必ず“十分”になる？
         // 在庫数が安定在庫数より小さければ
@@ -198,9 +213,12 @@ class ItemController extends Controller
         // idから更新対象の商品レコードを取得
         $item = Item::where('id', '=', $id)->first();
 
-        // バリデーションのチェック項目から在庫(stock)を外す
+        // バリデーションルールから不要チェック項目を破棄
         $validateRules = $this->validateRules;
-        unset($validateRules['stock']);
+        $removeKeys = ['stock', 'recordType', 'quantity'];
+        foreach($removeKeys as $key){
+            unset($validateRules[$key]);
+        }
         // バリデーションチェックを実施
         $validatedData = $request->validate($validateRules, $this->validateMessages, $this->attributes);
 
@@ -288,11 +306,14 @@ class ItemController extends Controller
         // idから記録対象の商品レコードを取得
         $item = Item::where('id', '=', $id)->first();
 
-        // 記録フォームからの入力値をセット & バリデーションチェックを実施
-        $validatedData = $request->validate([
-            'recordType' => ['bail', 'required', 'string'],
-            'quantity' => ['bail', 'required', 'numeric', 'digits_between:1,4']
-        ]);
+        // バリデーションルールから不要なチェック項目を破棄
+        $validateRules = $this->validateRules;
+        $removeKeys = ['type', 'name', 'unit', 'stock', 'safe_stock', 'detail'];
+        foreach($removeKeys as $key){
+            unset($validateRules[$key]);
+        }
+        // バリデーションチェックを実施
+        $validatedData = $request->validate($validateRules, $this->validateMessages, $this->attributes);
 
         // 在庫数の計算
         if($validatedData['recordType'] === 'incoming'){
