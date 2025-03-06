@@ -253,4 +253,25 @@ class ItemController extends Controller
         return redirect()->route('items.table')
             ->with('success', '商品が正常に削除されました。');
     }
+
+    /**
+     * 入出庫記録フォームを表示
+     * 
+     * @param $id
+     * 
+     * @return $response
+     */
+    public function showStockRecord($id)
+    {
+        // idから商品レコードを取得
+        $item = Item::where('id', '=', $id)->first();
+
+        // 該当するidの商品レコードがなかったら
+        if(!$item){
+            return redirect()->route('items.table')
+                ->with('failure', '商品が見つかりませんでした。');
+        }
+
+        return view('item.admin.record-stock', compact('item'));
+    }
 }
