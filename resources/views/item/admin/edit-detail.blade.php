@@ -75,10 +75,8 @@
                             <h4 class="mb-3">在庫情報</h4>
                                 <div class="form-row">
                                     <div class="col-md-5 mx-4">
-                                        <label for="stock">
-                                            在庫数
-                                        </label>
-                                        <p>{{ $item->stock }}</p>  
+                                        <label for="stock">在庫数</label>
+                                        <p class="card-text bg-light border p-2">{{ $item->stock }}</p>  
                                     </div>
 
                                     <div class="form-group col-md-5 mx-4">
