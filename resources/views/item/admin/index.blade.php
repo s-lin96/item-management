@@ -23,8 +23,17 @@
                     <h3 class="card-title">商品一覧</h3>
                     <div class="card-tools">
                         <div class="input-group input-group-sm">
+                            <!-- 商品登録ボタン -->
                             <div class="input-group-append">
                                 <a href="{{ route('item.create') }}" class="btn btn-primary">商品登録</a>
+                            </div>
+                            <!-- 削除済みを 表示 / 非表示 切り替えボタン-->
+                            <div class="input-group-append mx-2">
+                                @if(Request::is('items/admin'))
+                                    <a href="{{ route('deleted.items.show') }}" class="btn btn-outline-secondary">削除済み表示</a>
+                                @elseif(Request::is('items/admin/show-deleted'))
+                                    <a href="{{ route('items.table') }}" class="btn btn-outline-secondary">削除済み非表示</a>
+                                @endif
                             </div>
                         </div>
                     </div>

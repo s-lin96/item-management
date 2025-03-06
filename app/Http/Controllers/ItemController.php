@@ -68,7 +68,7 @@ class ItemController extends Controller
     }
 
     /**
-     * 商品一覧を表示（管理者向け/削除済み非表示）
+     * 商品一覧を表示（管理者向け / 削除済み非表示）
      * 
      * @param $request
      * 
@@ -78,6 +78,23 @@ class ItemController extends Controller
     {
         // 削除されていない商品を取得
         $items = Item::where('is_deleted', '=', 1)->get();
+        // 種別リストをセット
+        $types = $this->types;
+
+        return view('item.admin.index', compact('items', 'types'));
+    }
+
+    /**
+     * 商品一覧を表示（管理者向け / 削除済み表示）
+     * 
+     * @param $request
+     * 
+     * @return $response
+     */
+    public function showDeleted(Request $request)
+    {
+        // 全ての商品を取得
+        $items = Item::all();
         // 種別リストをセット
         $types = $this->types;
 
