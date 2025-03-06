@@ -274,4 +274,61 @@ class ItemController extends Controller
 
         return view('item.admin.record-stock', compact('item'));
     }
+
+    /**
+     * 入出庫を記録
+     * 
+     * @param $request
+     * @param $id
+     * 
+     * @return $response
+     */
+    public function updateStock(Request $request, $id)
+    {
+        // idから記録対象の商品レコードを取得
+        $item = Item::where('id', '=', $id)->first();
+
+        // 記録フォームからの入力値をセット & バリデーションチェックを実施
+        $validatedData = $request->validate([
+            'recordType' => ['bail', 'required', 'string'],
+            'quantity' => ['bail', 'required', 'numeric', 'digits_between:1,4']
+        ]);
+
+        // 在庫数の計算
+        if($validatedData['recordType'] === 'incoming'){
+            // 入庫ならプラス
+            $newStock = $item->stock + $validatedData['quantity'];
+        }elseif($validatedData['recordType'] === 'outgoing'){
+            // 現在庫数が足りるかチェック
+            if($item->stock < $validatedData['quantity']){
+                return back()
+                ->withInput()
+                ->withErrors([
+                    'quantity' => '在庫が足りません。'
+                ]);
+            }else{
+            // 出庫ならマイナス
+            $newStock = $item->stock - $validatedData['quantity'];
+            }
+        }
+
+        // 新しい在庫状況を取得
+        if($newStock >= $item->safe_stock){
+            $newStockStatus = 1; // 十分
+        }
+        elseif($newStock >= $item->safe_stock * 0.7 && $newStock < $item->safe_stock){
+            $newStockStatus = 2; // 少なめ
+        }
+        else{
+            $newStockStatus = 3; // 不足
+        }
+
+        // DBに変更を保存
+        $item->user_id = Auth::id();
+        $item->stock = $newStock;
+        $item->stock_status = $newStockStatus;
+        $item->save();
+
+        return redirect()->route('items.table')->with('success', '入出庫が正常に記録されました');
+    }
 }

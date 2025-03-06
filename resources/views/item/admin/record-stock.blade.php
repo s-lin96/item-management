@@ -28,7 +28,7 @@
 
             <div class="card card-primary">
                 <!-- 入出庫記録フォーム -->
-                <form action="{{ route('stock.record', $item->id ) }}" method="POST" novalidate>
+                <form action="{{ route('stock.update', $item->id ) }}" method="POST" novalidate>
                     @csrf
                     <div class="card-body">
                         <div class="form-group col-md-5 mx-4">
@@ -39,14 +39,20 @@
                             <div class="d-flex">
                                 <div class="form-check">
                                     <label>
-                                        <input class="form-check-input" type="radio" name="stockControl" id="stockControl" value="incoming">入庫
+                                        <input class="form-check-input" type="radio" name="recordType" id="recordType" value="incoming" @if(old('recordType')=='incoming') checked @endif>入庫
                                     </label>
                                 </div>
                                 <div class="form-check ml-5">
                                     <label>
-                                        <input class="form-check-input" type="radio" name="stockControl" id="stockControl" value="outgoing">出庫
+                                        <input class="form-check-input" type="radio" name="recordType" id="recordType" value="outgoing" @if(old('recordType')=='outgoing') checked @endif>出庫
                                     </label>                             
                                 </div>
+                            </div>
+                            <!-- エラーの詳細を表示 -->
+                            <div class="text-danger">
+                                @if($errors->has('recordType'))
+                                    {{ $errors->first('recordType') }}<br>
+                                @endif
                             </div>
                         </div>
 

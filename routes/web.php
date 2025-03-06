@@ -41,7 +41,7 @@ Route::get('/items/admin/delete/{id}', [App\Http\Controllers\ItemController::cla
 Route::get('/items/detail', [App\Http\Controllers\HomeController::class, 'showDetail'])->name('item.detail');
 // 管理者ユーザーのみアクセス可
 Route::get('/items/admin/record-stock/{id}', [App\Http\Controllers\ItemController::class, 'showStockRecord'])->name('stock.record'); // 入出庫記録
-Route::post('/items/admin/record-stock', [App\Http\Controllers\ItemController::class, 'updateStock'])->name('stock.update');
+Route::post('/items/admin/record-stock/{id}', [App\Http\Controllers\ItemController::class, 'updateStock'])->name('stock.update');
 Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.table'); // ユーザー管理
 Route::get('/users/{id}', [App\Http\Controllers\UserController::class, 'showUserEdit'])->name('user.edit'); // ユーザー編集
 Route::get('/users/delete/{id}', [App\Http\Controllers\UserController::class, 'delete'])->name('user.delete'); // ユーザー論理削除
