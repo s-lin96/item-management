@@ -383,6 +383,15 @@ class ItemController extends Controller
             $query->where('type', '=', $request->input('type'));
         }
 
+        // 在庫状況フィルター(在庫状況が選択されていれば適用)
+        if($request->filled('stockStatus')){
+            if($request->input('stockStatus') === 'lowStock'){
+                $query->where('stock_status', '=', 2);
+            }elseif($request->input('stockStatus') === 'insufficientStock'){
+                $query->where('stock_status', '=', 3);
+            }
+        }
+
         // 検索結果を取得
         $items = $query->get();
         // 種別リストをセット
