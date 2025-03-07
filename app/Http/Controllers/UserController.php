@@ -60,4 +60,24 @@ class UserController extends Controller
 
         return view('user.index', compact('users'));
     }
+
+    /**
+     * アカウント編集フォームを表示
+     * 
+     * @param $id
+     * 
+     * @return $response
+     */
+    public function showUserEdit($id)
+    {
+        // idから更新対象のユーザーレコードを取得
+        $user = User::where('id', '=', $id)->first();
+
+        if(!$user){
+            return redirect()->route('users.table')
+                ->with('failure', 'ユーザーが見つかりませんでした。');
+        }
+
+        return view('user.edit-user', compact('user'));
+    }
 }
