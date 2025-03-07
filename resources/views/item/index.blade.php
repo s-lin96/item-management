@@ -36,7 +36,7 @@
                                     <td class="text-right">{{ number_format($item->stock) }}</td>
                                     <td class="text-center">
                                         @if($item->stock_status === 1)
-                                            <span class="badge badge-primary">十 分</span>
+                                            <span class="badge badge-light">十 分</span>
                                         @elseif($item->stock_status === 2)
                                             <span class="badge badge-warning">少なめ</span>
                                         @else

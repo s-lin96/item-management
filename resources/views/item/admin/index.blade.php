@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 <div class="card-body table-responsive p-0">
-                    <table class="table table-hover text-nowrap">
+                    <table class="table table-hover text-nowrap table-sm">
                         <thead>
                             <tr>
                                 <th class="text-right">ID</th>
@@ -62,7 +62,7 @@
                                     <td class="text-right">{{ number_format($item->stock) }}</td>
                                     <td class="text-center">
                                         @if($item->stock_status === 1)
-                                            <span class="badge badge-primary">十 分</span>
+                                            <span class="badge badge-light">十 分</span>
                                         @elseif($item->stock_status === 2)
                                             <span class="badge badge-warning">少なめ</span>
                                         @else
@@ -72,12 +72,12 @@
                                     <td class="text-center">{{ $item->updated_at }}</td>
                                     <td class="text-center">{{ $item->user->name }}</td>
                                     <td class="text-center">
-                                        <a class="btn btn-outline-secondary" href="{{ route('stock.record', $item->id) }}" role="button" aria-label="入出庫記録フォームへ遷移">
+                                        <a class="btn btn-outline-primary" href="{{ route('stock.record', $item->id) }}" role="button" aria-label="入出庫記録フォームへ遷移">
                                             <i class="fa fa-calculator" ></i>
                                         </a>
                                     </td>
                                     <td class="text-center">
-                                        <a class="btn btn-outline-secondary" href="{{ route('item.edit', $item->id) }}" role="button" aria-label="商品編集フォームへ遷移">
+                                        <a class="btn btn-outline-primary" href="{{ route('item.edit', $item->id) }}" role="button" aria-label="商品編集フォームへ遷移">
                                             <i class="fa fa-pen"></i>
                                         </a>
                                     </td>

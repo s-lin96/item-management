@@ -25,12 +25,12 @@
                         <h4 class="mb-3">基本情報</h4>
                             <div class="col-md-5 mx-4">
                                 <label>種別</label>
-                                <p class="card-text ml-4 border p-2">{{ $types[$item->type] }}</p>
+                                <p class="card-text ml-4 bg-light border p-2">{{ $types[$item->type] }}</p>
                             </div>
 
                             <div class="col-md-5 mx-4">
                                 <label>名前</label>
-                                <p class="card-text ml-4 border p-2">{{ $item->name }}</p>
+                                <p class="card-text ml-4 bg-light border p-2">{{ $item->name }}</p>
                             </div>
                     </section>
                     <hr>
@@ -39,17 +39,17 @@
                             <div class="d-flex">
                                 <div class="col-md-2 mx-4">
                                     <label>在庫数</label>
-                                    <p class="card-text text-right ml-4 border p-2">{{ $item->stock }}</p>
+                                    <p class="card-text text-right bg-light ml-4 border p-2">{{ $item->stock }}</p>
                                 </div>
 
                                 <div class="col-md-2 mx-4">
                                     <label>単位</label>
-                                    <p class="card-text text-right ml-4 border p-2">{{ $units[$item->unit] }}</p>
+                                    <p class="card-text text-right bg-light ml-4 border p-2">{{ $units[$item->unit] }}</p>
                                 </div>
                             </div>
                             <div class="col-md-2 mx-4 mt-4">
                                 <label>安定在庫数</label>
-                                <p class="card-text text-right ml-4 border p-2">{{ $item->safe_stock }}</p>
+                                <p class="card-text text-right ml-4 bg-light border p-2">{{ $item->safe_stock }}</p>
                             </div>
                     </section>
                     <hr>
@@ -57,7 +57,7 @@
                         <h4 class="mb-3">詳細情報</h4>
                             <div class="col-md-10 mx-4">
                                 <label>説明</label>
-                                <p class="card-text text-break ml-4 border p-2" style="min-height: 200px;">{!! nl2br(e($item->detail)) !!}</p>
+                                <p class="card-text text-break ml-4 bg-light border p-2" style="min-height: 200px;">{!! nl2br(e($item->detail)) !!}</p>
                             </div>
                     </section>
                 </div>
