@@ -38,6 +38,21 @@ class UserController extends Controller
     }
 
     /**
+     * ユーザーアカウント一覧を表示（削除済み表示）
+     * 
+     * @param $request
+     * 
+     * @return $response
+     */
+    public function showDeleted(Request $request)
+    {
+        // 削除済みを含むすべてのユーザーレコードを取得
+        $users = User::all();
+
+        return view('user.index', compact('users'));
+    }
+    
+    /**
      * アカウント編集フォームを表示
      * 
      * @param $id
@@ -109,5 +124,25 @@ class UserController extends Controller
         // ユーザー管理画面へリダイレクト
         return redirect()->route('users.table')
             ->with('success', 'アカウント情報が正常に更新されました。');
+    }
+
+    /**
+     * ユーザーアカウントを削除
+     * 
+     * @param $id
+     * 
+     * @return $response
+     */
+    public function delete($id)
+    {
+        // idから対象ユーザーのレコードを取得
+        $user = User::where('id', '=', $id)->first();
+
+        // 削除フラグを更新して保存
+        $user->is_deleted = 0;
+        $user->save();
+
+        return redirect()->route('users.table')
+            ->with('success', 'ユーザーアカウントが正常に削除されました。');
     }
 }

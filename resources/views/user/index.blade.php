@@ -22,9 +22,22 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">ユーザーアカウント一覧</h3>
+                    <div class="card-tools">
+                        <div class="input-group input-group-sm">
+                            <!-- 削除済みを 表示 / 非表示 切り替えボタン-->
+                            <div class="input-group-append">
+                                @if(Request::is('users'))
+                                    <a href="{{ route('deleted.users.show') }}" class="btn btn-outline-secondary">削除済み表示</a>
+                                @elseif(Request::is('users/show-deleted'))
+                                    <a href="{{ route('users.table') }}" class="btn btn-outline-secondary">削除済み非表示</a>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="card-body table-responsive p-0">
-                    <table class="table table-hover text-nowrap">
+                    <table class="table table-hover text-nowrap table-sm">
                         <thead>
                             <tr>
                                 <th class="text-right">ID</th>
@@ -37,7 +50,7 @@
                         </thead>
                         <tbody>
                             @foreach ($users as $user)
-                                <tr>
+                                <tr class="{{ $user->is_deleted ? '' : 'table-secondary' }}">
                                     <td class="text-right">{{ $user->id }}</td>
                                     <td class="text-left">{{ $user->name }}</td>
                                     <td class="text-left">{{ $user->email }}</td>

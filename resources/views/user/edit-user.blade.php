@@ -91,7 +91,7 @@
                     <div class="card-footer d-flex">
                             <button type="submit" class="btn btn-primary col-2 mx-2">更新</button>
                             <a class="btn btn-secondary col-2 mx-2" href="{{ route('users.table') }}">戻る</a>
-                            <!-- <a class="btn btn-danger col-2 mx-2 ml-auto" href="{{ route('user.delete', $user->id) }}">削除</a> -->
+                            <a class="btn btn-danger col-2 mx-2 ml-auto" href="{{ route('user.delete', $user->id) }}">削除</a>
                     </div>
                 </form>
             </div>
