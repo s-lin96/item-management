@@ -20,30 +20,6 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-
-        // バリデーションルール
-        $this->validateRules = [
-            'name' => ['bail', 'required', 'string', 'max:100'],
-            'email' => ['bail', 'required', 'email', 'max:255'],
-            'is_admin' => ['bail', 'required', Rule::in([0,1])],
-        ];
-
-        $this->validateMessages = [
-            'name.required' => ':attribute は必須項目です。',
-            'name.string' => ':attribute は文字列で入力してください。',
-            'name.max' => ':attribute は最大 :max 文字です。',
-            'email.required' => ':attribute は必須項目です。',
-            'email.email' => ':attribute は@ドメインまで含んだ形式で入力してください。',
-            'email.max' => ':attribute は最大 :max 文字です。',
-            'email.required' => ':attribute は必須項目です。',
-            'is_admin.required' => ':attribute は必須項目です。'
-        ];
-
-        $this->attributes = [
-            'name' => '名前',
-            'email' => 'メールアドレス',
-            'is_admin' => '権限',
-        ];
     }
 
     /**
@@ -79,5 +55,59 @@ class UserController extends Controller
         }
 
         return view('user.edit-user', compact('user'));
+    }
+
+    /**
+     * アカウント情報を更新
+     * 
+     * @param $request
+     * @param $id
+     * 
+     * @return $response
+     */
+    public function updateUser(Request $request, $id)
+    {
+        // idから更新対象のユーザーレコードを取得
+        $user = User::where('id', '=', $id)->first();
+
+        // バリデーションルール
+        $validateRules = [
+            'name' => ['bail', 'required', 'string', 'max:100'],
+            'email' => ['bail', 'required', 'email', 'max:255', Rule::unique('users','email')->ignore($user->id)],
+            'isAdmin' => ['bail', 'required', Rule::in([0,1])]
+        ];
+
+        // バリデーションメッセージ
+        $validateMessages = [
+            'name.required' => ':attribute は必須項目です。',
+            'name.string' => ':attribute は文字列で入力してください。',
+            'name.max' => ':attribute は最大 :max 文字です。',
+            'email.required' => ':attribute は必須項目です。',
+            'email.email' => ':attribute は@ドメインまで含んだ形式で入力してください。',
+            'email.max' => ':attribute は最大 :max 文字です。',
+            'email.unique' => 'この :attribute はすでに登録されています。',
+            'isAdmin.required' => ':attribute は必須項目です。'
+        ];
+
+        // 属性
+        $attributes = [
+            'name' => '名前',
+            'email' => 'メールアドレス',
+            'is_admin' => '権限',
+        ];
+    
+        // バリデーションチェックを実施
+        $validatedData = $request->validate($validateRules, $validateMessages, $attributes);
+
+        // カラム名 -> バリデーション済み入力値をセット
+        $user->name = $validatedData['name'];
+        $user->email = $validatedData['email'];
+        $user->is_admin = intval($validatedData['isAdmin']); // 数値に変換
+        // 変更を保存
+        $user->save();
+
+        // ユーザー管理画面へリダイレクト
+        return redirect()->route('users.table')
+            ->with('success', 'アカウント情報が正常に更新されました。');
     }
 }

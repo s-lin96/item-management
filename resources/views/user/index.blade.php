@@ -8,6 +8,16 @@
 
 @section('content')
     <div class="row">
+        <!-- フラッシュメッセージを表示：アカウント編集完了時 -->
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show w-100 text-center" role="alert">
+                <i class="fas fa-check-circle" aria-hidden="true"></i> {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+        
         <div class="col-12">
             <div class="card">
                 <div class="card-header">

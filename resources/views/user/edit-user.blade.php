@@ -29,7 +29,7 @@
             @endif
 
             <div class="card card-primary">
-                <!-- 商品編集フォーム -->
+                <!-- アカウント編集フォーム -->
                 <form action="{{ route('user.update', $user->id ) }}" method="POST" novalidate>
                     @csrf
                     <div class="card-body">
@@ -52,7 +52,7 @@
                                 メールアドレス
                                 <span class="badge border border-danger text-danger">必須</span>
                             </label>
-                            <input type="email" class="form-control col-md-5" id="email" name="name" value="{{ old('email', $user->email) }}" placeholder="@ドメインを含んだ形式で入力してください" max="100" required>
+                            <input type="email" class="form-control col-md-5" id="email" name="email" value="{{ old('email', $user->email) }}" placeholder="@ドメインを含んだ形式で入力してください" max="255" required>
                             <!-- エラーの詳細を表示 -->
                             <div class="text-danger">
                                 @if($errors->has('email'))
