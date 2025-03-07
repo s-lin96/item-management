@@ -81,7 +81,7 @@ class HomeController extends Controller
      * 
      * @return $response
      */
-    public function searchItems(Request $request)
+    public function searchItem(Request $request)
     {
         // 初期化：置換後のキーワードを入れる変数
         $cleanedKeyword = '';
@@ -102,7 +102,7 @@ class HomeController extends Controller
         if($request->filled('type')){
             $query->where('type', '=', $request->input('type'));
         }
- 
+
         // 検索結果を取得
         $items = $query->get();
         // 種別リストをセット

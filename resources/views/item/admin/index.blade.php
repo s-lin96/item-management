@@ -20,7 +20,42 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">商品一覧</h3>
+                    <!-- 検索フォーム -->
+                    <form action="{{ route('search.by.admin') }}" method="get"  class="form-inline">
+                        <div class="form-row align-items-center">
+                            <!-- 種別を選択 -->
+                            <div class="col-auto"> 
+                                <label class="sr-only" for="type">種別</label>
+                                <div class="input-group mb-2 mr-sm-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fa fa-tags" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                    <select class="form-control" name="type" id="type">
+                                        <option value="">-- 種別 --</option>
+                                        @foreach(config('types.types') as $id => $name)
+                                            <option value="{{ $id }}" {{ request('type') == $id ? 'selected' : '' }}>
+                                                {{ $name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- キーワードを入力 -->
+                            <div class="col-auto">
+                                <label class="sr-only" for="keyword">商品名または商品詳細</label>
+                                <input type="text" class="form-control mb-2 mr-sm-2" id="keyword" name="keyword" value="{{ $cleanedKeyword ?? '' }}" placeholder="商品名 または 商品詳細" >
+                            </div>
+
+                            <!-- 検索ボタン -->
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-primary mb-2">検索</button>
+                            </div>
+                        </div>
+                    </form>
+
                     <div class="card-tools">
                         <div class="input-group input-group-sm">
                             <!-- 商品登録ボタン -->

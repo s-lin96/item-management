@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
 use Illuminate\Validation\Rule;
+use Illuminate\Database\Eloquent\Builder;
 
 class ItemController extends Controller
 {
@@ -351,5 +352,42 @@ class ItemController extends Controller
         $item->save();
 
         return redirect()->route('items.table')->with('success', '入出庫が正常に記録されました');
+    }
+
+    /**
+     * 商品を検索
+     * 
+     * @param $request
+     * 
+     * @return $response
+     */
+    public function searchItem(Request $request)
+    {
+        // 初期化：置換後のキーワードを入れる変数
+        $cleanedKeyword = '';
+        // 削除されていない商品の中から
+        $query = Item::query();
+
+        // キーワード検索(キーワードがあれば適用)
+        if($request->filled('keyword')){
+            // 記号や絵文字を「半角スペース」に置換
+            $cleanedKeyword = preg_replace('/[^\p{L}\p{N}\s]/u', '', $request->input('keyword'));
+            $query->where(function (Builder $query) use ($cleanedKeyword) {
+                $query->where('name', 'LIKE', "%{$cleanedKeyword}%")
+                    ->orWhere('detail', 'LIKE', "%$cleanedKeyword%");
+            });
+        }
+
+        // 種別検索(種別が選択されていれば適用)
+        if($request->filled('type')){
+            $query->where('type', '=', $request->input('type'));
+        }
+
+        // 検索結果を取得
+        $items = $query->get();
+        // 種別リストをセット
+        $types = $this->types;
+        
+        return view('item.admin.index', compact('items', 'types', 'cleanedKeyword'));
     }
 }
