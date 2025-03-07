@@ -13,10 +13,35 @@
                 <div class="card-header">
                     <!-- 検索フォーム -->
                     <form action="{{ route('item.search') }}" method="get"  class="form-inline">
-                        <label class="sr-only" for="keyword">Name</label>
-                        <input type="text" class="form-control mb-2 mr-sm-2" id="keyword" name="keyword" value="{{ $cleanedKeyword ?? '' }}" placeholder="商品名 または 商品詳細" >
+                    <div class="form-row align-items-center">
+                        <div class="col-auto"> 
+                            <label class="sr-only" for="type">種別</label>
+                            <div class="input-group mb-2 mr-sm-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fa fa-tags" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <select class="form-control" name="type" id="type">
+                                    <option value="">-- 種別 --</option>
+                                    @foreach(config('types.types') as $id => $name)
+                                        <option value="{{ $id }}" {{ request('type') == $id ? 'selected' : '' }}>
+                                            {{ $name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-auto">
+                            <label class="sr-only" for="keyword">商品名または商品詳細</label>
+                            <input type="text" class="form-control mb-2 mr-sm-2" id="keyword" name="keyword" value="{{ $cleanedKeyword ?? '' }}" placeholder="商品名 または 商品詳細" >
+                        </div>
 
-                        <button type="submit" class="btn btn-primary mb-2">検索</button>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary mb-2">検索</button>
+                        </div>
+                    </div>
                     </form>
                 </div>
                 <div class="card-body table-responsive p-0">

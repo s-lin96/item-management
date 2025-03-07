@@ -85,8 +85,8 @@ class HomeController extends Controller
     {
         // 初期化：置換後のキーワードを入れる変数
         $cleanedKeyword = '';
-        // クエリインスタンスを作成
-        $query = Item::query();
+        // 削除されていない商品の中から
+        $query = Item::where('is_deleted', '=', 1);
 
         // キーワード検索(キーワードがあれば適用)
         if($request->filled('keyword')){
@@ -97,11 +97,17 @@ class HomeController extends Controller
                     ->orWhere('detail', 'LIKE', "%$cleanedKeyword%");
             });
         }
+
+        // 種別検索(種別が選択されていれば適用)
+        if($request->filled('type')){
+            $query->where('type', '=', $request->input('type'));
+        }
+ 
         // 検索結果を取得
         $items = $query->get();
         // 種別リストをセット
         $types = $this->types;
-
+        
         return view('item.index', compact('items', 'types', 'cleanedKeyword'));
     }
 }
