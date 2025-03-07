@@ -11,7 +11,13 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">商品一覧</h3>
+                    <!-- 検索フォーム -->
+                    <form action="{{ route('item.search') }}" method="get"  class="form-inline">
+                        <label class="sr-only" for="keyword">Name</label>
+                        <input type="text" class="form-control mb-2 mr-sm-2" id="keyword" name="keyword" value="{{ $cleanedKeyword ?? '' }}" placeholder="商品名 または 商品詳細" >
+
+                        <button type="submit" class="btn btn-primary mb-2">検索</button>
+                    </form>
                 </div>
                 <div class="card-body table-responsive p-0">
                     <table class="table table-hover text-nowrap">

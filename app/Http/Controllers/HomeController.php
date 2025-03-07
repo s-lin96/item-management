@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Item;
+use Illuminate\Database\Eloquent\Builder;
 
 class HomeController extends Controller
 {
@@ -71,5 +72,36 @@ class HomeController extends Controller
         $units = $this->units;
 
         return view('item.detail', compact('item', 'types', 'units'));
+    }
+
+    /**
+     * 商品を検索
+     * 
+     * @param $request
+     * 
+     * @return $response
+     */
+    public function searchItems(Request $request)
+    {
+        // 初期化：置換後のキーワードを入れる変数
+        $cleanedKeyword = '';
+        // クエリインスタンスを作成
+        $query = Item::query();
+
+        // キーワード検索(キーワードがあれば適用)
+        if($request->filled('keyword')){
+            // 記号や絵文字を「半角スペース」に置換
+            $cleanedKeyword = preg_replace('/[^\p{L}\p{N}\s]/u', '', $request->input('keyword'));
+            $query->where(function (Builder $query) use ($cleanedKeyword) {
+                $query->where('name', 'LIKE', "%{$cleanedKeyword}%")
+                    ->orWhere('detail', 'LIKE', "%$cleanedKeyword%");
+            });
+        }
+        // 検索結果を取得
+        $items = $query->get();
+        // 種別リストをセット
+        $types = $this->types;
+
+        return view('item.index', compact('items', 'types', 'cleanedKeyword'));
     }
 }
