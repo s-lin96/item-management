@@ -23,12 +23,12 @@
                 <div class="card-body">
                     <section>
                         <h4 class="mb-3">基本情報</h4>
-                            <div class="col-md-5 mx-4">
+                            <div class="col-md-6 mx-4">
                                 <label>種別</label>
                                 <p class="card-text ml-4 bg-light border p-2">{{ $types[$item->type] }}</p>
                             </div>
 
-                            <div class="col-md-5 mx-4">
+                            <div class="col-md-6 mx-4">
                                 <label>名前</label>
                                 <p class="card-text ml-4 bg-light border p-2">{{ $item->name }}</p>
                             </div>

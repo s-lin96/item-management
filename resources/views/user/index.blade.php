@@ -57,7 +57,7 @@
                                     <td class="text-center">{{ $user->is_admin == 1 ? '管理者' : '一般ユーザー' }}</td>
                                     <td class="text-center">{{ $user->updated_at }}</td>
                                     <td class="text-center">
-                                        <a class="btn btn-outline-secondary" href="{{ route('user.update', $user->id) }}" role="button" aria-label="アカウント編集フォームへ遷移">
+                                        <a class="btn btn-outline-secondary btn-sm" href="{{ route('user.update', $user->id) }}" role="button" aria-label="アカウント編集フォームへ遷移">
                                             <i class="fa fa-pen"></i>
                                         </a>
                                     </td>

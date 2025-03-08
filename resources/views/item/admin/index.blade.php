@@ -124,12 +124,12 @@
                                     <td class="text-center">{{ $item->updated_at }}</td>
                                     <td class="text-center">{{ $item->user->name }}</td>
                                     <td class="text-center">
-                                        <a class="btn btn-outline-primary" href="{{ route('stock.record', $item->id) }}" role="button" aria-label="入出庫記録フォームへ遷移">
+                                        <a class="btn btn-outline-primary btn-sm" href="{{ route('stock.record', $item->id) }}" role="button" aria-label="入出庫記録フォームへ遷移">
                                             <i class="fa fa-calculator" ></i>
                                         </a>
                                     </td>
                                     <td class="text-center">
-                                        <a class="btn btn-outline-primary" href="{{ route('item.edit', $item->id) }}" role="button" aria-label="商品編集フォームへ遷移">
+                                        <a class="btn btn-outline-primary btn-sm" href="{{ route('item.edit', $item->id) }}" role="button" aria-label="商品編集フォームへ遷移">
                                             <i class="fa fa-pen"></i>
                                         </a>
                                     </td>

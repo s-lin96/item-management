@@ -137,7 +137,7 @@
                     <!-- 送信 & キャンセル -->
                     <div class="card-footer text-center">
                             <button type="submit" class="btn btn-primary col-2 mx-2">登録</button>
-                            <a class="btn btn-secondary col-2 mx-2" href="{{ route('items.table') }}">キャンセル</a>
+                            <a class="btn btn-secondary col-2 mx-2" href="{{ route('items.table') }}">戻る</a>
                     </div>
                 </form>
             </div>
