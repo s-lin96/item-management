@@ -92,6 +92,7 @@
                 </div>
 
                 <div class="card-body table-responsive p-0">
+                @if($items->count() > 0)
                     <table class="table table-hover text-nowrap table-sm">
                         <thead>
                             <tr>
@@ -138,7 +139,15 @@
                             @endforeach
                         </tbody>
                     </table>
-                </div>
+                    </div>
+
+                    <!-- ページネーションリンク -->
+                    <div class="card-footer d-flex justify-content-end">
+                        {{ $items->appends(request()->query())->links() }}
+                    </div>
+                @else
+                    <p class="text-center m-3 font-weight-bold">商品が見つかりませんでした。</p>
+                @endif
             </div>
         </div>
     </div>

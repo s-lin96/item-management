@@ -96,7 +96,7 @@
                             {{ $items->appends(request()->query())->links() }}
                         </div>
                     @else
-                        <p class="text-center">登録されている商品はありません。</p>
+                        <p class="text-center m-3 font-weight-bold">商品が見つかりませんでした。</p>
                     @endif
             </div>
         </div>

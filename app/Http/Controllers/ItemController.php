@@ -87,7 +87,7 @@ class ItemController extends Controller
     public function index(Request $request)
     {
         // 削除されていない商品を取得
-        $items = Item::where('is_deleted', '=', 1)->get();
+        $items = Item::where('is_deleted', '=', 1)->paginate(15);
         // 種別リストをセット
         $types = $this->types;
 
@@ -104,7 +104,7 @@ class ItemController extends Controller
     public function showDeleted(Request $request)
     {
         // 全ての商品を取得
-        $items = Item::all();
+        $items = Item::paginate(15);
         // 種別リストをセット
         $types = $this->types;
 
@@ -355,7 +355,7 @@ class ItemController extends Controller
     }
 
     /**
-     * 商品を検索
+     * 商品を検索(削除済みを含む)
      * 
      * @param $request
      * 
@@ -393,7 +393,7 @@ class ItemController extends Controller
         }
 
         // 検索結果を取得
-        $items = $query->get();
+        $items = $query->paginate(15);
         // 種別リストをセット
         $types = $this->types;
         
