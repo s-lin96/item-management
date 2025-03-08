@@ -107,6 +107,12 @@ class HomeController extends Controller
         $items = $query->paginate(10);
         // 種別リストをセット
         $types = $this->types;
+
+        // セッションに検索条件を保存
+        session([
+            'searchKeyword' => $cleanedKeyword,
+            'searchType' => $request->input('type'),
+        ]);
         
         return view('item.index', compact('items', 'types', 'cleanedKeyword'));
     }

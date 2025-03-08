@@ -62,9 +62,20 @@
                     </section>
                 </div>
 
-                <!-- 戻る -->
+                <!-- 戻るボタン: 
+                    検索条件あれば検索結果一覧へ 
+                    検索条件なければデフォルトの商品一覧へ
+                -->
                 <div class="card-footer">
-                    <a class="btn btn-secondary col-2 mx-2" href="{{ route('items.table.readonly') }}">戻る</a>
+                    <a  href="{{ session('searchKeyword') || session('searchType') 
+                    ? route('search.by.allusers', [
+                            'keyword' => session('searchKeyword'),
+                            'type' =>session('searchType')
+                        ])
+                    : route('items.table.readonly') }}" 
+                    class="btn btn-secondary col-2 mx-2">
+                        戻る
+                    </a>
                 </div>
             </div>
         </div>

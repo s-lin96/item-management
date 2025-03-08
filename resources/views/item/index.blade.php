@@ -44,6 +44,12 @@
                             <div class="col-auto">
                                 <button type="submit" class="btn btn-primary mb-2">検索</button>
                             </div>
+                            <!-- 検索条件リセットボタン -->
+                            <div class="col-auto">
+                                <a href="{{ route('items.table.readonly') }}" class="btn btn-default mb-2">
+                                    条件リセット
+                                </a>
+                            </div>
                         </div>
                     </form>
                 </div>
