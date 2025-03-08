@@ -104,7 +104,7 @@ class HomeController extends Controller
         }
 
         // 検索結果を取得
-        $items = $query->get();
+        $items = $query->paginate(10);
         // 種別リストをセット
         $types = $this->types;
         

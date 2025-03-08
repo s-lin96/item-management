@@ -12,7 +12,7 @@
             <div class="card">
                 <div class="card-header">
                     <!-- 検索フォーム -->
-                    <form action="{{ route('search.by.allusers') }}" method="get"  class="form-inline">
+                    <form action="{{ route('search.by.allusers') }}" method="GET"  class="form-inline">
                         <div class="form-row align-items-center">
                             <!-- 種別を選択 -->
                             <div class="col-auto"> 
@@ -93,7 +93,7 @@
 
                         <!-- ページネーションリンク -->
                         <div class="card-footer d-flex justify-content-end">
-                            {{ $items->links() }}
+                            {{ $items->appends(request()->query())->links() }}
                         </div>
                     @else
                         <p class="text-center">登録されている商品はありません。</p>
