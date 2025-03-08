@@ -50,45 +50,54 @@
 
                 <div class="card-body table-responsive p-0">
                     <!-- 商品一覧 -->
-                    <table class="table table-hover text-nowrap">
-                        <thead>
-                            <tr>
-                                <th class="text-right">ID</th>
-                                <th class="text-left">種別</th>
-                                <th class="text-left">名前</th>
-                                <th class="text-right">在庫数</th>
-                                <th class="text-center">在庫状況</th>
-                                <th class="text-center">最終更新日時</th>
-                                <th class="text-center">最終更新者</th>
-                                <th class="text-center">商品詳細</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($items as $item)
+                    @if($items->count() > 0)
+                        <table class="table table-hover text-nowrap">
+                            <thead>
                                 <tr>
-                                    <td class="text-right">{{ $item->id }}</td>
-                                    <td class="text-left">{{ $types[$item->type] ?? '不明' }}</td>
-                                    <td class="text-left">{{ $item->name }}</td>
-                                    <td class="text-right">{{ number_format($item->stock) }}</td>
-                                    <td class="text-center">
-                                        @if($item->stock_status === 1)
-                                            <span class="badge badge-light">十 分</span>
-                                        @elseif($item->stock_status === 2)
-                                            <span class="badge badge-warning">少なめ</span>
-                                        @else
-                                            <span class="badge badge-danger">不 足</span>
-                                        @endif
-                                    </td>
-                                    <td class="text-center">{{ $item->updated_at }}</td>
-                                    <td class="text-center">{{ $item->user->name }}</td>
-                                    <td class="text-center">
-                                        <a href="{{ route('item.detail', $item->id) }}">≻ 詳細情報を見る</a>
-                                    </td>
+                                    <th class="text-right">ID</th>
+                                    <th class="text-left">種別</th>
+                                    <th class="text-left">名前</th>
+                                    <th class="text-right">在庫数</th>
+                                    <th class="text-center">在庫状況</th>
+                                    <th class="text-center">最終更新日時</th>
+                                    <th class="text-center">最終更新者</th>
+                                    <th class="text-center">商品詳細</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                            </thead>
+                            <tbody>
+                                @foreach ($items as $item)
+                                    <tr>
+                                        <td class="text-right">{{ $item->id }}</td>
+                                        <td class="text-left">{{ $types[$item->type] ?? '不明' }}</td>
+                                        <td class="text-left">{{ $item->name }}</td>
+                                        <td class="text-right">{{ number_format($item->stock) }}</td>
+                                        <td class="text-center">
+                                            @if($item->stock_status === 1)
+                                                <span class="badge badge-light">十 分</span>
+                                            @elseif($item->stock_status === 2)
+                                                <span class="badge badge-warning">少なめ</span>
+                                            @else
+                                                <span class="badge badge-danger">不 足</span>
+                                            @endif
+                                        </td>
+                                        <td class="text-center">{{ $item->updated_at }}</td>
+                                        <td class="text-center">{{ $item->user->name }}</td>
+                                        <td class="text-center">
+                                            <a href="{{ route('item.detail', $item->id) }}">≻ 詳細情報を見る</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        </div>
+
+                        <!-- ページネーションリンク -->
+                        <div class="card-footer d-flex justify-content-end">
+                            {{ $items->links() }}
+                        </div>
+                    @else
+                        <p class="text-center">登録されている商品はありません。</p>
+                    @endif
             </div>
         </div>
     </div>

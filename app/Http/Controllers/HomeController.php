@@ -44,7 +44,7 @@ class HomeController extends Controller
     public function showItemsTable(Request $request)
     {
         // 削除されていない商品を取得
-        $items = Item::where('is_deleted', '=', 1)->get();
+        $items = Item::where('is_deleted', '=', 1)->paginate(10);
         // 種別リストをセット
         $types = $this->types;
 
