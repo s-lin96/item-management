@@ -61,7 +61,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-md-5 mx-4">
+                        <div class="form-group col-md-5 mx-4 mb-5">
                             <label>
                                 権限
                             <span class="badge border border-danger text-danger">必須</span>
@@ -85,13 +85,18 @@
                                 @endif
                             </div>
                         </div>
+
+                        <!-- 削除ボタン -->
+                        <a class="btn btn-danger col-2 mt-5" href="{{ route('user.delete', $user->id) }}">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                            削除
+                        </a>
                     </div>
 
-                    <!-- 各種ボタン -->
-                    <div class="card-footer d-flex">
-                            <button type="submit" class="btn btn-primary col-2 mx-2">更新</button>
-                            <a class="btn btn-secondary col-2 mx-2" href="{{ route('users.table') }}">戻る</a>
-                            <a class="btn btn-danger col-2 mx-2 ml-auto" href="{{ route('user.delete', $user->id) }}">削除</a>
+                    <!-- 戻る & 更新ボタン -->
+                    <div class="card-footer d-flex justify-content-between">
+                        <a class="btn btn-outline-secondary col-2" href="{{ route('users.table') }}">戻る</a>
+                        <button type="submit" class="btn btn-primary col-2 ml-auto">更新</button>
                     </div>
                 </form>
             </div>

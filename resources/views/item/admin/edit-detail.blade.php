@@ -116,7 +116,7 @@
                             </div>
                         </section>
                         <hr>
-                        <section>
+                        <section class="mb-5">
                             <h4 class="mb-3">詳細情報</h4>
                                 <div class="form-group mx-4">
                                     <label for="detail">
@@ -132,26 +132,32 @@
                                     </div>
                                 </div>
                         </section>
+                
+                        <!-- 削除ボタン -->
+                        <a class="btn btn-danger col-2" href="{{ route('item.delete', $item->id) }}">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                削除
+                        </a>                        
                     </div>
 
-                    <!-- 各種ボタン 
-                        戻るボタン：
-                        検索条件あれば検索結果一覧へ 
-                        検索条件なければデフォルトの商品一覧へ
-                    -->
-                    <div class="card-footer d-flex">
-                            <button type="submit" class="btn btn-primary col-2 mx-2">更新</button>
-                            <a  href="{{ session('searchKeyword') || session('searchType') || session('searchStockStatus') 
-                            ? route('search.by.admin', [
-                                    'keyword' => session('searchKeyword'),
-                                    'type' => session('searchType'),
-                                    'stockStatus' => session('searchStockStatus')
-                                ])
-                            : route('items.table') }}" 
-                            class="btn btn-secondary col-2 mx-2">
-                                戻る
-                            </a>
-                            <a class="btn btn-danger col-2 mx-2 ml-auto" href="{{ route('item.delete', $item->id) }}">削除</a>
+                    <div class="card-footer d-flex justify-content-between">
+                        <!-- 戻るボタン：
+                            検索条件あれば検索結果一覧へ 
+                            検索条件なければデフォルトの商品一覧へ
+                        -->
+                        <a  href="{{ session('searchKeyword') || session('searchType') || session('searchStockStatus') 
+                        ? route('search.by.admin', [
+                                'keyword' => session('searchKeyword'),
+                                'type' => session('searchType'),
+                                'stockStatus' => session('searchStockStatus')
+                            ])
+                        : route('items.table') }}" 
+                        class="btn btn-outline-secondary col-2">
+                            戻る
+                        </a>
+
+                        <!-- 更新ボタン -->
+                        <button type="submit" class="btn btn-primary col-2 ml-auto">更新</button>
                     </div>
                 </form>
             </div>
