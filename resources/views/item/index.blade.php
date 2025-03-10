@@ -60,7 +60,7 @@
                 <div class="card-body table-responsive p-0">
                     <!-- 商品一覧 -->
                     @if($items->count() > 0)
-                        <table class="table table-hover text-nowrap">
+                        <table class="table table-hover text-nowrap table-sm">
                             <thead>
                                 <tr>
                                     <th class="text-right">ID</th>
@@ -92,7 +92,9 @@
                                         <td class="text-center">{{ $item->updated_at }}</td>
                                         <td class="text-center">{{ $item->user->name }}</td>
                                         <td class="text-center">
-                                            <a href="{{ route('item.detail', $item->id) }}">≻ 詳細情報を見る</a>
+                                            <a class="btn btn-outline-primary btn-sm" href="{{ route('item.detail', $item->id) }}" role="button" aria-label="商品詳細画面へ遷移">
+                                                <i class="fa fa-search-plus"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach

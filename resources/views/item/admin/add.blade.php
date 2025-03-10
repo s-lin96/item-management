@@ -134,10 +134,24 @@
                         </section>
                     </div>
 
-                    <!-- 送信 & キャンセル -->
+                    <!-- 送信ボタン &　
+                        戻るボタン：
+                        検索条件あれば検索結果一覧へ 
+                        検索条件なければデフォルトの商品一覧へ
+                    -->
                     <div class="card-footer text-center">
                             <button type="submit" class="btn btn-primary col-2 mx-2">登録</button>
-                            <a class="btn btn-secondary col-2 mx-2" href="{{ route('items.table') }}">戻る</a>
+
+                            <a  href="{{ session('searchKeyword') || session('searchType') || session('searchStockStatus') 
+                            ? route('search.by.admin', [
+                                    'keyword' => session('searchKeyword'),
+                                    'type' => session('searchType'),
+                                    'stockStatus' => session('searchStockStatus')
+                                ])
+                            : route('items.table') }}" 
+                            class="btn btn-secondary col-2 mx-2">
+                                戻る
+                            </a>
                     </div>
                 </form>
             </div>

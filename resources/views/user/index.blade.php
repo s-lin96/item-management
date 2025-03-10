@@ -27,9 +27,9 @@
                             <!-- 削除済みを 表示 / 非表示 切り替えボタン-->
                             <div class="input-group-append">
                                 @if(Request::is('users'))
-                                    <a href="{{ route('deleted.users.show') }}" class="btn btn-outline-secondary">削除済み表示</a>
+                                    <a href="{{ route('deleted.users.show') }}" class="btn btn-outline-secondary rounded">削除済み表示</a>
                                 @elseif(Request::is('users/show-deleted'))
-                                    <a href="{{ route('users.table') }}" class="btn btn-outline-secondary">削除済み非表示</a>
+                                    <a href="{{ route('users.table') }}" class="btn btn-outline-secondary rounded">削除済み非表示</a>
                                 @endif
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                                     <td class="text-center">{{ $user->is_admin == 1 ? '管理者' : '一般ユーザー' }}</td>
                                     <td class="text-center">{{ $user->updated_at }}</td>
                                     <td class="text-center">
-                                        <a class="btn btn-outline-secondary btn-sm" href="{{ route('user.update', $user->id) }}" role="button" aria-label="アカウント編集フォームへ遷移">
+                                        <a class="btn btn-outline-primary btn-sm" href="{{ route('user.update', $user->id) }}" role="button" aria-label="アカウント編集フォームへ遷移">
                                             <i class="fa fa-pen"></i>
                                         </a>
                                     </td>

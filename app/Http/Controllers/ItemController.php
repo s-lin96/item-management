@@ -87,7 +87,7 @@ class ItemController extends Controller
     public function index(Request $request)
     {
         // 削除されていない商品を取得
-        $items = Item::where('is_deleted', '=', 1)->paginate(15);
+        $items = Item::where('is_deleted', '=', 1)->paginate(12);
         // 種別リストをセット
         $types = $this->types;
 
@@ -104,7 +104,7 @@ class ItemController extends Controller
     public function showDeleted(Request $request)
     {
         // 全ての商品を取得
-        $items = Item::paginate(15);
+        $items = Item::paginate(12);
         // 種別リストをセット
         $types = $this->types;
 
@@ -393,9 +393,16 @@ class ItemController extends Controller
         }
 
         // 検索結果を取得
-        $items = $query->paginate(15);
+        $items = $query->paginate(12);
         // 種別リストをセット
         $types = $this->types;
+
+        // セッションに検索条件を保存
+        session([
+            'searchKeyword' => $cleanedKeyword,
+            'searchType' => $request->input('type'),
+            'searchStockStatus' => $request->input('stockStatus')
+        ]);
         
         return view('item.admin.index', compact('items', 'types', 'cleanedKeyword'));
     }

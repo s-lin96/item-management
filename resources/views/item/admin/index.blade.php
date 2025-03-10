@@ -72,19 +72,28 @@
                             </div>
                         </div>
                     </form>
+                    <!-- 検索条件リセットボタン -->
+                    <div class="col-auto">
+                        <a href="{{ route('items.table') }}" class="text-muted">
+                            <small>
+                                <i class="fa fa-times-circle" aria-hidden="true"></i>
+                                条件クリア
+                            </small>
+                        </a>
+                    </div>
 
                     <div class="card-tools">
                         <div class="input-group input-group-sm">
                             <!-- 商品登録ボタン -->
                             <div class="input-group-append">
-                                <a href="{{ route('item.create') }}" class="btn btn-primary">商品登録</a>
+                                <a href="{{ route('item.create') }}" class="btn btn-primary rounded">商品登録</a>
                             </div>
                             <!-- 削除済みを 表示 / 非表示 切り替えボタン-->
                             <div class="input-group-append mx-2">
                                 @if(Request::is('items/admin'))
-                                    <a href="{{ route('deleted.items.show') }}" class="btn btn-outline-secondary">削除済み表示</a>
+                                    <a href="{{ route('deleted.items.show') }}" class="btn btn-outline-secondary rounded">削除済み表示</a>
                                 @elseif(Request::is('items/admin/show-deleted'))
-                                    <a href="{{ route('items.table') }}" class="btn btn-outline-secondary">削除済み非表示</a>
+                                    <a href="{{ route('items.table') }}" class="btn btn-outline-secondary rounded">削除済み非表示</a>
                                 @endif
                             </div>
                         </div>

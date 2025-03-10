@@ -134,10 +134,23 @@
                         </section>
                     </div>
 
-                    <!-- 各種ボタン -->
+                    <!-- 各種ボタン 
+                        戻るボタン：
+                        検索条件あれば検索結果一覧へ 
+                        検索条件なければデフォルトの商品一覧へ
+                    -->
                     <div class="card-footer d-flex">
                             <button type="submit" class="btn btn-primary col-2 mx-2">更新</button>
-                            <a class="btn btn-secondary col-2 mx-2" href="{{ route('items.table') }}">戻る</a>
+                            <a  href="{{ session('searchKeyword') || session('searchType') || session('searchStockStatus') 
+                            ? route('search.by.admin', [
+                                    'keyword' => session('searchKeyword'),
+                                    'type' => session('searchType'),
+                                    'stockStatus' => session('searchStockStatus')
+                                ])
+                            : route('items.table') }}" 
+                            class="btn btn-secondary col-2 mx-2">
+                                戻る
+                            </a>
                             <a class="btn btn-danger col-2 mx-2 ml-auto" href="{{ route('item.delete', $item->id) }}">削除</a>
                     </div>
                 </form>
