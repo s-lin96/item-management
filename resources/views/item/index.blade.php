@@ -36,6 +36,23 @@
                                 </div>
                             </div>
 
+                            <!-- 在庫状況を選択 -->
+                            <div class="col-auto"> 
+                                <label class="sr-only" for="stockStatus">在庫状況</label>
+                                <div class="input-group mb-2 mr-sm-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fa fa-archive" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                    <select class="form-control" name="stockStatus" id="type">
+                                        <option value="">-- 在庫状況 --</option>
+                                        <option value="lowStock" {{ request('stockStatus') == 'lowStock' ? 'selected' : '' }}>少なめ</option>
+                                        <option value="insufficientStock" {{ request('stockStatus') == 'insufficientStock' ? 'selected' : '' }}>不足</option>
+                                    </select>
+                                </div>
+                            </div>
+
                             <!-- キーワードを入力 -->
                             <div class="col-auto">
                                 <label class="sr-only" for="keyword">商品名または商品詳細</label>

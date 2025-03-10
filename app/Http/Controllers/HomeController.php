@@ -32,7 +32,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        // 在庫不足の商品を取得
+        $insufficientStockCount = Item::where('stock_status', '=', 3)->count();
+        $lowStockCount = Item::where('stock_status', '=', 2)->count();
+
+        return view('home', compact('insufficientStockCount', 'lowStockCount'));
     }
 
     /**
@@ -103,6 +107,15 @@ class HomeController extends Controller
             $query->where('type', '=', $request->input('type'));
         }
 
+        // 在庫状況フィルター(在庫状況が選択されていれば適用)
+        if($request->filled('stockStatus')){
+            if($request->input('stockStatus') === 'lowStock'){
+                $query->where('stock_status', '=', 2);
+            }elseif($request->input('stockStatus') === 'insufficientStock'){
+                $query->where('stock_status', '=', 3);
+            }
+        }
+
         // 検索結果を取得
         $items = $query->paginate(12);
         // 種別リストをセット
@@ -112,6 +125,7 @@ class HomeController extends Controller
         session([
             'searchKeyword' => $cleanedKeyword,
             'searchType' => $request->input('type'),
+            'searchStockStatus' => $request->input('stockStatus')
         ]);
         
         return view('item.index', compact('items', 'types', 'cleanedKeyword'));
