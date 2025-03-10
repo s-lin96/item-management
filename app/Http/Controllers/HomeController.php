@@ -36,7 +36,10 @@ class HomeController extends Controller
         $insufficientStockCount = Item::where('stock_status', '=', 3)->count();
         $lowStockCount = Item::where('stock_status', '=', 2)->count();
 
-        return view('home', compact('insufficientStockCount', 'lowStockCount'));
+        // 削除済み商品レコードを取得
+        $deletedItems = Item::where('is_deleted', '=', 0)->get();
+
+        return view('home', compact('insufficientStockCount', 'lowStockCount', 'deletedItems'));
     }
 
     /**
