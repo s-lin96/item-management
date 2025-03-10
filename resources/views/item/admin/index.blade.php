@@ -3,7 +3,9 @@
 @section('title', '商品一覧')
 
 @section('content_header')
-    <h1>商品一覧</h1>
+    <h1>
+        商品一覧 <small class="text-muted">( {{ $items->total() }} 件 )</small>
+    </h1>
 @stop
 
 @section('content')
@@ -151,8 +153,13 @@
                     </div>
 
                     <!-- ページネーションリンク -->
-                    <div class="card-footer d-flex justify-content-end">
-                        {{ $items->appends(request()->query())->links() }}
+                    <div class="card-footer d-flex justify-content-between">
+                        <div class="text-muted mt-2">
+                            {{ $items->firstItem() }} - {{ $items->lastItem() }} 件表示中 (全 {{ $items->total() }} 件)
+                        </div>
+                        <div class="text-muted ml-auto">
+                            {{ $items->appends(request()->query())->links() }}
+                        </div>
                     </div>
                 @else
                     <p class="text-center m-3 font-weight-bold">商品が見つかりませんでした。</p>
