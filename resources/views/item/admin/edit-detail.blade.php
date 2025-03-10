@@ -134,7 +134,7 @@
                         </section>
                 
                         <!-- 削除ボタン -->
-                        <a class="btn btn-danger col-2" href="{{ route('item.delete', $item->id) }}">
+                        <a class="btn btn-danger btn-sm col-1" href="{{ route('item.delete', $item->id) }}">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                                 削除
                         </a>                        

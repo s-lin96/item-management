@@ -87,7 +87,7 @@
                         </div>
 
                         <!-- 削除ボタン -->
-                        <a class="btn btn-danger col-2 mt-5" href="{{ route('user.delete', $user->id) }}">
+                        <a class="btn btn-danger btn-sm col-1 mt-5" href="{{ route('user.delete', $user->id) }}">
                             <i class="fa fa-trash" aria-hidden="true"></i>
                             削除
                         </a>
