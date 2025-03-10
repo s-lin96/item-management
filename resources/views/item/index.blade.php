@@ -51,7 +51,7 @@
                         <a href="{{ route('items.table.readonly') }}" class="text-muted">
                             <small>
                                 <i class="fa fa-times-circle" aria-hidden="true"></i>
-                                条件クリア
+                                検索条件クリア
                             </small>
                         </a>
                     </div>
