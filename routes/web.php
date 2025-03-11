@@ -48,4 +48,5 @@ Route::middleware(['can:isAdmin'])->group(function(){
     Route::get('/users/edit-user/{id}', [App\Http\Controllers\UserController::class, 'showUserEdit'])->name('user.edit'); // ユーザー編集
     Route::post('/users/edit-user/{id}', [App\Http\Controllers\UserController::class, 'updateUser'])->name('user.update');
     Route::get('/users/delete/{id}', [App\Http\Controllers\UserController::class, 'delete'])->name('user.delete'); // ユーザー論理削除
+    Route::get('/users/restore/{id}', [App\Http\Controllers\UserController::class, 'restore'])->name('user.restore');
 });

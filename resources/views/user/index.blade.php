@@ -21,7 +21,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">ユーザーアカウント一覧</h3>
+                    <h3 class="card-title">アカウント一覧</h3>
                     <div class="card-tools">
                         <div class="input-group input-group-sm">
                             <!-- 削除済みを 表示 / 非表示 切り替えボタン-->
@@ -44,8 +44,10 @@
                                 <th class="text-left">名前</th>
                                 <th class="text-left">メールアドレス</th>
                                 <th class="text-center">権限</th>
-                                <th class="text-center">最終更新日時</th>
+                                <th class="text-center">登録日時</th>
+                                <th class="text-center">最終更新日時</th>                                
                                 <th class="text-center">アカウント編集</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -55,11 +57,23 @@
                                     <td class="text-left">{{ $user->name }}</td>
                                     <td class="text-left">{{ $user->email }}</td>
                                     <td class="text-center">{{ $user->is_admin == 1 ? '管理者' : '一般ユーザー' }}</td>
+                                    <td class="text-center">{{ $user->created_at }}</td>
                                     <td class="text-center">{{ $user->updated_at }}</td>
                                     <td class="text-center">
-                                        <a class="btn btn-outline-primary btn-sm" href="{{ route('user.update', $user->id) }}" role="button" aria-label="アカウント編集フォームへ遷移">
+                                        @if($user->is_deleted === 0)
+                                            <button type="button" class="btn btn-outline-primary btn-sm" disabled aria-label="アカウント編集ボタン" aria-disabled="true">
                                             <i class="fa fa-pen"></i>
-                                        </a>
+                                            </button>
+                                        @else
+                                            <a class="btn btn-outline-primary btn-sm" href="{{ route('user.update', $user->id) }}" role="button" aria-label="アカウント編集フォームへ遷移">
+                                                <i class="fa fa-pen"></i>
+                                            </a>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($user->is_deleted === 0)
+                                            <a class="btn btn-success btn-sm" href="{{ route('user.restore', $user->id) }}">復元</a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

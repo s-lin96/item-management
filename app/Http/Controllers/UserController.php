@@ -145,4 +145,24 @@ class UserController extends Controller
         return redirect()->route('users.table')
             ->with('success', 'ユーザーアカウントが正常に削除されました。');
     }
+
+    /**
+     * 削除されたユーザーアカウントを復元
+     * 
+     * @param $id
+     * 
+     * @return $response
+     */
+    public function restore($id)
+    {
+        // idから復元対象のユーザーレコードを取得
+        $user = User::where('id', '=', $id)->first();
+
+        // 削除フラグを無効にして保存
+        $user->is_deleted = 1;
+        $user->save();
+
+        return redirect()->route('users.table')
+            ->with('success', 'ユーザーアカウントが正常に復元されました。');
+    }
 }
