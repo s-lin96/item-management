@@ -50,6 +50,9 @@ class HomeController extends Controller
      */
     public function showItemsTable(Request $request)
     {
+        // 商品一覧に戻ったときに検索条件セッションをクリア
+        session()->forget(['searchKeyword', 'searchType', 'searchStockStatus']);
+
         // 削除されていない商品を取得
         $items = Item::where('is_deleted', '=', 1)->paginate(12);
         // 種別リストをセット

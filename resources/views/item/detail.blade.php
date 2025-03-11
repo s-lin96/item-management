@@ -67,10 +67,11 @@
                         検索条件あれば検索結果一覧へ 
                         検索条件なければデフォルトの商品一覧へ
                     -->
-                    <a  href="{{ session('searchKeyword') || session('searchType') 
+                    <a  href="{{ session('searchKeyword') || session('searchType') || session('searchStockStatus')
                     ? route('search.by.allusers', [
                             'keyword' => session('searchKeyword'),
-                            'type' =>session('searchType')
+                            'type' => session('searchType'),
+                            'stockStatus' => session('searchStockStatus')
                         ])
                     : route('items.table.readonly') }}" 
                     class="btn btn-outline-secondary col-2">
