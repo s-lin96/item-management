@@ -69,9 +69,9 @@
     </div>
     <div class="card-body">
         <ul class="list-group list-group-flush">
-            @foreach(config('types.types') as $type => $name)
+            @foreach(config('types.types') as $id => $name)
                 <li class="list-group-item list-group-item-action">
-                    <a href="{{ route('search.by.allusers', ['type' => $type]) }}" class="card-link">
+                    <a href="{{ route('search.by.allusers', ['type' => $id]) }}" class="card-link">
                         {{ $name }}
                     </a>
                 </li>
