@@ -1,13 +1,13 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'ホーム')
 
 @section('content_header')
-    <h1>Dashboard</h1>
+    <h1>ホーム</h1>
 @stop
 
 @section('content')
-<!-- 在庫状況お知らせ欄 -->
+<!-- 在庫状況お知らせ欄: 不足 & 少なめ -->
 <div class="d-flex">
     <div class="small-box bg-danger w-75 mx-1">
         <div class="inner">
@@ -49,13 +49,14 @@
 </div>
 
 <div class="d-flex">
-<div class="card w-75 mh-auto mx-1">
-    <div class="card-header">
+<!-- 削除済み商品表示欄 -->
+<div class="card w-75 mx-1" style="height: 420px;">
+    <div class="card-header bg-light">
         <h3 class="card-title">
-            削除された商品 <i class="fa fa-trash" aria-hidden="true"></i>
+            <i class="fa fa-trash" aria-hidden="true"></i> 削除された商品 
         </h3>
     </div>
-    <div class="card-body overflow-auto">
+    <div class="card-body overflow-auto" style="max-height: calc(100% - 56px);">
         <ul class="list-group list-group-flush">
             @foreach($deletedItems as $deletedItem)
                 <li class="list-group-item text-muted">{{ $deletedItem['name'] }}</li>
@@ -63,11 +64,15 @@
         </ul>
     </div>
 </div>
-<div class="card w-75 mh-auto mx-1">
-    <div class="card-header">
-        <h3 class="card-title">商品カテゴリー</h3>
+<!-- クイックアクセス: 商品種別 -->
+<div class="card w-75 mx-1" style="height: 420px;">
+    <div class="card-header bg-light">
+        <h3 class="card-title">
+            <i class="fa fa-tags" aria-hidden="true"></i> 商品種別
+            <small class="text-muted">クイックアクセス</small>
+        </h3>
     </div>
-    <div class="card-body">
+    <div class="card-body overflow-auto" style="max-height: calc(100% - 56px);">
         <ul class="list-group list-group-flush">
             @foreach(config('types.types') as $id => $name)
                 <li class="list-group-item list-group-item-action">

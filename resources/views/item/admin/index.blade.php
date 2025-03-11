@@ -120,7 +120,7 @@
                         </thead>
                         <tbody>
                             @foreach ($items as $item)
-                                <tr class="{{ $item->is_deleted ? '' : 'table-secondary' }}">
+                                <tr class="{{ $item->is_deleted ? '' : 'text-muted font-weight-bold' }}">
                                     <td class="text-right">{{ $item->id }}</td>
                                     <td class="text-left">{{ $types[$item->type] ?? '不明' }}</td>
                                     <td class="text-left">{{ $item->name }}</td>

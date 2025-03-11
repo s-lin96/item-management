@@ -50,7 +50,7 @@
                         </thead>
                         <tbody>
                             @foreach ($users as $user)
-                                <tr class="{{ $user->is_deleted ? '' : 'table-secondary' }}">
+                                <tr class="{{ $user->is_deleted ? '' : 'text-muted font-weight-bold' }}">
                                     <td class="text-right">{{ $user->id }}</td>
                                     <td class="text-left">{{ $user->name }}</td>
                                     <td class="text-left">{{ $user->email }}</td>
