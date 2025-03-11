@@ -131,7 +131,9 @@
                             </div>
                         </div>
                     @else
-                        <p class="text-center m-3 font-weight-bold">商品が見つかりませんでした。</p>
+                        <div class="d-flex justify-content-center">
+                            <p class="text-center font-weight-bold m-3">商品が見つかりませんでした。</p>
+                        </div>
                     @endif
             </div>
         </div>
