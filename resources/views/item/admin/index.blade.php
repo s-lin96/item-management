@@ -116,6 +116,7 @@
                                 <th class="text-center">最終更新者</th>
                                 <th class="text-center">入出庫記録</th>
                                 <th class="text-center">商品編集</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -137,14 +138,31 @@
                                     <td class="text-center">{{ $item->updated_at }}</td>
                                     <td class="text-center">{{ $item->user->name }}</td>
                                     <td class="text-center">
-                                        <a class="btn btn-outline-primary btn-sm" href="{{ route('stock.record', $item->id) }}" role="button" aria-label="入出庫記録フォームへ遷移">
-                                            <i class="fa fa-calculator" ></i>
-                                        </a>
+                                        @if($item->is_deleted === 0)
+                                            <button type="button" class="btn btn-outline-primary btn-sm" disabled aria-label="入出庫記録ボタン" aria-disabled="true">
+                                                <i class="fa fa-calculator" ></i>
+                                            </button>
+                                        @else
+                                            <a class="btn btn-outline-primary btn-sm" href="{{ route('stock.record', $item->id) }}" role="button" aria-label="入出庫記録フォームへ遷移">
+                                                <i class="fa fa-calculator" ></i>
+                                            </a>
+                                        @endif
                                     </td>
                                     <td class="text-center">
-                                        <a class="btn btn-outline-primary btn-sm" href="{{ route('item.edit', $item->id) }}" role="button" aria-label="商品編集フォームへ遷移">
-                                            <i class="fa fa-pen"></i>
-                                        </a>
+                                        @if($item->is_deleted === 0)
+                                            <button type="button" class="btn btn-outline-primary btn-sm" disabled aria-label="商品編集ボタン" aria-disabled="true">
+                                                <i class="fa fa-pen"></i>
+                                            </button>
+                                        @else
+                                            <a class="btn btn-outline-primary btn-sm" href="{{ route('item.edit', $item->id) }}" role="button" aria-label="商品編集フォームへ遷移">
+                                                <i class="fa fa-pen"></i>
+                                            </a>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($item->is_deleted === 0)
+                                        <a class="btn btn-success btn-sm" href="{{ route('item.restore', $item->id) }}" role="button">復元</a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

@@ -274,6 +274,29 @@ class ItemController extends Controller
     }
 
     /**
+     * 削除された商品を復元
+     * 
+     * @param $id
+     * 
+     * @return $response
+     */
+    public function restore($id)
+    {
+        // idから復元対象の商品レコードを取得
+        $item = Item::where('id', '=', $id)->first();
+
+        // 削除フラグを無効
+        $item->user_id = Auth::id();
+        $item->is_deleted = 1;
+        // 変更を保存
+        $item->save();
+
+        // 商品一覧(管理者向け)へリダイレクト
+        return redirect()->route('items.table')
+            ->with('success', '商品が正常に復元されました。');
+    }
+
+    /**
      * 入出庫記録フォームを表示
      * 
      * @param $id

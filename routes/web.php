@@ -39,6 +39,7 @@ Route::middleware(['can:isAdmin'])->group(function(){
     Route::post('/items/admin/edit-detail/{id}', [App\Http\Controllers\ItemController::class, 'updateItem'])->name('item.update'); // 商品編集
 
     Route::get('/items/admin/delete/{id}', [App\Http\Controllers\ItemController::class, 'delete'])->name('item.delete'); // 商品論理削除
+    Route::get('/items/admin/restore/{id}', [App\Http\Controllers\ItemController::class, 'restore'])->name('item.restore');
     Route::get('/items/admin/record-stock/{id}', [App\Http\Controllers\ItemController::class, 'showStockRecord'])->name('stock.record'); // 入出庫記録
     Route::post('/items/admin/record-stock/{id}', [App\Http\Controllers\ItemController::class, 'updateStock'])->name('stock.update');
 
