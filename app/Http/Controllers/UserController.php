@@ -32,7 +32,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         // 削除されていないユーザーを取得
-        $users = User::where('is_deleted', '=', 1)->get();
+        $users = User::where('is_deleted', '=', 1)->paginate(12);
 
         return view('user.index', compact('users'));
     }
@@ -47,7 +47,7 @@ class UserController extends Controller
     public function showDeleted(Request $request)
     {
         // 削除済みを含むすべてのユーザーレコードを取得
-        $users = User::all();
+        $users = User::paginate(12);
 
         return view('user.index', compact('users'));
     }

@@ -3,7 +3,9 @@
 @section('title', 'ユーザー管理')
 
 @section('content_header')
-    <h1>ユーザー管理</h1>
+    <h1>
+        ユーザー管理 <small class="text-muted">( {{ $users->total() }} 件 )</small>
+    </h1>
 @stop
 
 @section('content')
@@ -21,7 +23,6 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">アカウント一覧</h3>
                     <div class="card-tools">
                         <div class="input-group input-group-sm">
                             <!-- 削除済みを 表示 / 非表示 切り替えボタン-->
@@ -79,6 +80,16 @@
                             @endforeach
                         </tbody>
                     </table>
+
+                    <!-- ページネーションリンク -->
+                    <div class="card-footer d-flex justify-content-between">
+                        <div class="text-muted mt-2">
+                            {{ $users->firstItem() }} - {{ $users->lastItem() }} 件表示中 (全 {{ $users->total() }} 件)
+                        </div>
+                        <div class="text-muted ml-auto">
+                            {{ $users->links() }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
