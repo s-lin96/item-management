@@ -37,10 +37,10 @@ class HomeController extends Controller
 
         // バリデーションメッセージ
         $this->validateMessages = [
-            'keyword.string' => ':attributes は文字列で入力してください。',
-            'keyword.max' => ':attributes は最大 :max 文字までです。',
-            'type.in' => ':attributes はプルダウンから選択してください。',
-            'stockStatus.in' => ':attributes はプルダウンから選択してください。',
+            'keyword.string' => ':attribute は文字列で入力してください。',
+            'keyword.max' => ':attribute は最大 :max 文字までです。',
+            'type.in' => ':attribute はプルダウンから選択してください。',
+            'stockStatus.in' => ':attribute はプルダウンから選択してください。',
         ];
 
         // 属性

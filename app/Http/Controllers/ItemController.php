@@ -44,6 +44,7 @@ class ItemController extends Controller
         // バリデーションメッセージ(検索処理は別途付与)
         $this->validateMessages = [
             'type.required' => ':attribute は必須項目です。',
+            'type.in' => ':attribute はプルダウンから選択してください。',
             'name.required' => ':attribute は必須項目です。',
             'name.string' => ':attribute は文字列で入力してください。',
             'name.max' => ':attribute は最大 :max 文字です。',
@@ -51,6 +52,7 @@ class ItemController extends Controller
             'stock.numeric' => ':attribute は 数字で入力してください。',
             'stock.digits_between' => ':attribute は :min ～ :max 桁で入力してください。',
             'unit.required' => ':attribute は必須項目です。',
+            'unit.in' => ':attribute はプルダウンから選択してください。',
             'safe_stock.required' => ':attribute は必須項目です。',
             'safe_stock.numeric' => ':attribute は数字で入力してください。',
             'safe_stock.digits_between' => ':attribute は :min ～ :max 桁で入力してください。',
@@ -397,10 +399,10 @@ class ItemController extends Controller
                 'stockStatus' => ['nullable', Rule::in(['lowStock', 'insufficientStock'])],
             ],
             [
-                'keyword.string' => ':attributes は文字列で入力してください。',
-                'keyword.max' => ':attributes は最大 :max 文字までです。',
-                'type.in' => ':attributes はプルダウンから選択してください。',
-                'stockStatus.in' => ':attributes はプルダウンから選択してください。',
+                'keyword.string' => ':attribute は文字列で入力してください。',
+                'keyword.max' => ':attribute は最大 :max 文字までです。',
+                'type.in' => ':attribute はプルダウンから選択してください。',
+                'stockStatus.in' => ':attribute はプルダウンから選択してください。',
             ],
             [
                 'keyword' => 'キーワード',
