@@ -28,7 +28,7 @@
                                     <select class="form-control" name="type" id="type">
                                         <option value="">-- 種別 --</option>
                                         @foreach(config('types.types') as $id => $name)
-                                            <option value="{{ $id }}" @if(old('type' == $id)) selected @endif>
+                                            <option value="{{ $id }}" @if(old('type', $selectedType ?? '') == $id) selected @endif>
                                                 {{ $name }}
                                             </option>
                                         @endforeach
@@ -53,8 +53,8 @@
                                     </div>
                                     <select class="form-control" name="stockStatus" id="stockStatus">
                                         <option value="">-- 在庫状況 --</option>
-                                        <option value="lowStock" @if(old('stockStatus' === 'lowStock')) selected @endif>少なめ</option>
-                                        <option value="insufficientStock" @if(old('stockStatus' === 'insufficientStock')) selected @endif>不足</option>
+                                        <option value="lowStock" @if(old('stockStatus', $selectedStockStatus ?? '') === 'lowStock') selected @endif>少なめ</option>
+                                        <option value="insufficientStock" @if(old('stockStatus', $selectedStockStatus ?? '') === 'insufficientStock') selected @endif>不足</option>
                                     </select>
                                     <!-- エラーの詳細を表示 -->
                                     <div class="text-danger">

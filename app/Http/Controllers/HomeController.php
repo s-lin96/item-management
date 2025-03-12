@@ -122,8 +122,10 @@ class HomeController extends Controller
         // バリデーションチェック実施
         $request->validate($this->validateRules, $this->validateMessages, $this->attributes);
         
-        // 初期化：置換後のキーワードを入れる変数
+        // 初期化
         $cleanedKeyword = '';
+        $selectedType = '';
+        $selectedStockStatus = '';
         // 削除されていない商品の中から
         $query = Item::where('is_deleted', '=', 1);
 
@@ -139,14 +141,17 @@ class HomeController extends Controller
 
         // 種別検索(種別が選択されていれば適用)
         if($request->filled('type')){
-            $query->where('type', '=', $request->input('type'));
+            $selectedType = $request->input('type');
+            $query->where('type', '=', $selectedType);
         }
 
         // 在庫状況フィルター(在庫状況が選択されていれば適用)
         if($request->filled('stockStatus')){
-            if($request->input('stockStatus') === 'lowStock'){
+            $selectedStockStatus = $request->input('stockStatus');
+
+            if($selectedStockStatus === 'lowStock'){
                 $query->where('stock_status', '=', 2);
-            }elseif($request->input('stockStatus') === 'insufficientStock'){
+            }elseif($selectedStockStatus === 'insufficientStock'){
                 $query->where('stock_status', '=', 3);
             }
         }
@@ -159,10 +164,10 @@ class HomeController extends Controller
         // セッションに検索条件を保存
         session([
             'searchKeyword' => $cleanedKeyword,
-            'searchType' => $request->input('type'),
-            'searchStockStatus' => $request->input('stockStatus')
+            'searchType' => $selectedType,
+            'searchStockStatus' => $selectedStockStatus
         ]);
         
-        return view('item.index', compact('items', 'types', 'cleanedKeyword'));
+        return view('item.index', compact('items', 'types', 'cleanedKeyword', 'selectedType', 'selectedStockStatus'));
     }
 }
