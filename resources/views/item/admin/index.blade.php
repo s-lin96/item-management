@@ -42,12 +42,6 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                    <!-- エラーの詳細を表示 -->
-                                    <div class="text-danger">
-                                        @if($errors->has('type'))
-                                            {{ $errors->first('type') }}<br>
-                                        @endif
-                                    </div>
                                 </div>
                             </div>
 
@@ -65,12 +59,6 @@
                                         <option value="lowStock" @if(old('stockStatus', $selectedStockStatus ?? '') === 'lowStock') selected @endif>少なめ</option>
                                         <option value="insufficientStock" @if(old('stockStatus', $selectedStockStatus ?? '') === 'insufficientStock') selected @endif>不足</option>
                                     </select>
-                                    <!-- エラーの詳細を表示 -->
-                                    <div class="text-danger">
-                                        @if($errors->has('stockStatus'))
-                                            {{ $errors->first('stockStatus') }}<br>
-                                        @endif
-                                    </div>
                                 </div>
                             </div>
 
@@ -78,20 +66,26 @@
                             <div class="col-auto">
                                 <label class="sr-only" for="keyword">商品名または商品詳細</label>
                                 <input type="text" class="form-control mb-2 mr-sm-2" id="keyword" name="keyword" value="{{ old('keyword', $cleanedKeyword ?? '') }}" placeholder="商品名 または 商品詳細" >
-                                <!-- エラーの詳細を表示 -->
-                                <div class="text-danger">
-                                    @if($errors->has('keyword'))
-                                        {{ $errors->first('keyword') }}<br>
-                                    @endif
-                                </div>
                             </div>
+                            
+                            <!-- 検索ボタンとエラーメッセージを横並び -->
+                            <div class="col-auto d-flex align-items-center">
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-primary mb-2">検索</button>
+                                </div>
 
-                            <!-- 検索ボタン -->
-                            <div class="col-auto">
-                                <button type="submit" class="btn btn-primary mb-2">検索</button>
+                                <div class="ml-3 text-danger">
+                                    @foreach(['type', 'stockStatus', 'keyword'] as $field)
+                                        @error($field)
+                                            <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                                            {{ $message }}
+                                        @enderror
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
                     </form>
+                    
                     <!-- 検索条件リセットボタン -->
                     <div class="col-auto">
                         <a href="{{ route('items.table') }}" class="text-muted">
