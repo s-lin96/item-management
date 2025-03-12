@@ -406,7 +406,7 @@ class ItemController extends Controller
             ],
             [
                 'keyword' => 'キーワード',
-                'type' => '商品種別',
+                'type' => '種別',
                 'stockStatus' => '在庫状況',
             ],
         );

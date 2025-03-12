@@ -46,7 +46,7 @@ class HomeController extends Controller
         // 属性
         $this->attributes = [
             'keyword' => 'キーワード',
-            'type' => '商品種別',
+            'type' => '種別',
             'stockStatus' => '在庫状況',
         ];
     }
