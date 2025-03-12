@@ -5,11 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Item;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Validation\Rule;
 
 class HomeController extends Controller
 {
     protected $types;
     protected $units;
+    protected $validateRules;
+    protected $validateMessages;
+    protected $attributes;
 
     /**
      * Create a new controller instance.
@@ -23,6 +27,28 @@ class HomeController extends Controller
         // 設定ファイル（種別・単位）の値をコンストラクタで取得
         $this->types = config('types.types');
         $this->units = config('units.units');
+
+        // バリデーションルール
+        $this->validateRules = [
+            'keyword' => ['nullable', 'string', 'max:255'],
+            'type' => ['nullable', Rule::in(array_keys($this->types))],
+            'stockStatus' => ['nullable', Rule::in(['lowStock', 'insufficientStock'])],
+        ];
+
+        // バリデーションメッセージ
+        $this->validateMessages = [
+            'keyword.string' => ':attributes は文字列で入力してください。',
+            'keyword.max' => ':attributes は最大 :max 文字までです。',
+            'type.in' => ':attributes はプルダウンから選択してください。',
+            'stockStatus.in' => ':attributes はプルダウンから選択してください。',
+        ];
+
+        // 属性
+        $this->attributes = [
+            'keyword' => 'キーワード',
+            'type' => '商品種別',
+            'stockStatus' => '在庫状況',
+        ];
     }
 
     /**
@@ -58,7 +84,7 @@ class HomeController extends Controller
         // 種別リストをセット
         $types = $this->types;
 
-        return view('item.index', compact('items', 'types'));;
+        return view('item.index', compact('items', 'types'));
     }
 
     /**
@@ -93,6 +119,9 @@ class HomeController extends Controller
      */
     public function searchItem(Request $request)
     {
+        // バリデーションチェック実施
+        $request->validate($this->validateRules, $this->validateMessages, $this->attributes);
+        
         // 初期化：置換後のキーワードを入れる変数
         $cleanedKeyword = '';
         // 削除されていない商品の中から

@@ -28,11 +28,17 @@
                                     <select class="form-control" name="type" id="type">
                                         <option value="">-- 種別 --</option>
                                         @foreach(config('types.types') as $id => $name)
-                                            <option value="{{ $id }}" {{ request('type') == $id ? 'selected' : '' }}>
+                                            <option value="{{ $id }}" @if(old('type' == $id)) selected @endif>
                                                 {{ $name }}
                                             </option>
                                         @endforeach
                                     </select>
+                                    <!-- エラーの詳細を表示 -->
+                                    <div class="text-danger">
+                                        @if($errors->has('type'))
+                                            {{ $errors->first('type') }}<br>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
 
@@ -45,18 +51,30 @@
                                             <i class="fa fa-archive" aria-hidden="true"></i>
                                         </div>
                                     </div>
-                                    <select class="form-control" name="stockStatus" id="type">
+                                    <select class="form-control" name="stockStatus" id="stockStatus">
                                         <option value="">-- 在庫状況 --</option>
-                                        <option value="lowStock" {{ request('stockStatus') == 'lowStock' ? 'selected' : '' }}>少なめ</option>
-                                        <option value="insufficientStock" {{ request('stockStatus') == 'insufficientStock' ? 'selected' : '' }}>不足</option>
+                                        <option value="lowStock" @if(old('stockStatus' === 'lowStock')) selected @endif>少なめ</option>
+                                        <option value="insufficientStock" @if(old('stockStatus' === 'insufficientStock')) selected @endif>不足</option>
                                     </select>
+                                    <!-- エラーの詳細を表示 -->
+                                    <div class="text-danger">
+                                        @if($errors->has('stockStatus'))
+                                            {{ $errors->first('stockStatus') }}<br>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
 
                             <!-- キーワードを入力 -->
                             <div class="col-auto">
                                 <label class="sr-only" for="keyword">商品名または商品詳細</label>
-                                <input type="text" class="form-control mb-2 mr-sm-2" id="keyword" name="keyword" value="{{ $cleanedKeyword ?? '' }}" placeholder="商品名 または 商品詳細" >
+                                <input type="text" class="form-control mb-2 mr-sm-2" id="keyword" name="keyword" value="{{ old('keyword' , $cleanedKeyword ?? '') }}" placeholder="商品名 または 商品詳細" >
+                                <!-- エラーの詳細を表示 -->
+                                <div class="text-danger">
+                                    @if($errors->has('keyword'))
+                                        {{ $errors->first('keyword') }}<br>
+                                    @endif
+                                </div>
                             </div>
 
                             <!-- 検索ボタン -->
