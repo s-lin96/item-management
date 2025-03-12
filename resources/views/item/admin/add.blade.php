@@ -34,7 +34,7 @@
                                     <select class="form-control col-md-5" name="type" id="type" required>
                                         <option value="">-- 選択してください --</option>
                                         @foreach(config('types.types') as $id => $name)
-                                            <option value="{{ $id }}" @if(old('type')==$id) selected @endif>
+                                            <option value="{{ $id }}" @if(old('type') == $id) selected @endif>
                                                 {{ $name }}
                                             </option>
                                         @endforeach
@@ -87,7 +87,7 @@
                                         <select class="form-control" name="unit" id="unit" required>
                                             <option value="">-- 選択してください --</option>
                                             @foreach(config('units.units') as $id => $name)
-                                                <option value="{{ $id }}" @if(old('unit')==$id) selected @endif>
+                                                <option value="{{ $id }}" @if(old('unit') == $id) selected @endif>
                                                     {{ $name }}
                                                 </option>
                                             @endforeach
