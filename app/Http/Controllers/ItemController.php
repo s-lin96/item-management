@@ -28,8 +28,8 @@ class ItemController extends Controller
         // 設定ファイル（種別・単位）の値をコンストラクタで取得
         $this->types = config('types.types');
         $this->units = config('units.units');
-        // dd($this->types, $this->units);
-        // バリデーションルール
+
+        // バリデーションルール(検索処理は別途付与)
         $this->validateRules = [
             'type' => ['bail', 'required', Rule::in(array_keys($this->types))],
             'name' => ['bail', 'required', 'string', 'max:100'],
@@ -41,7 +41,7 @@ class ItemController extends Controller
             'quantity' => ['bail', 'required', 'numeric', 'digits_between:1,4']
         ];
 
-        // バリデーションメッセージ
+        // バリデーションメッセージ(検索処理は別途付与)
         $this->validateMessages = [
             'type.required' => ':attribute は必須項目です。',
             'name.required' => ':attribute は必須項目です。',
@@ -64,7 +64,7 @@ class ItemController extends Controller
             'quantity.digits_between' => ':attribute は :min ～ :max 桁で入力してください。',
         ];
 
-        // 属性
+        // 属性(検索処理は別途付与)
         $this->attributes = [
             'type' => '種別',
             'name' => '名前',
@@ -389,8 +389,30 @@ class ItemController extends Controller
      */
     public function searchItem(Request $request)
     {
+        // バリデーションチェック実施
+        $request->validate(
+            [
+                'keyword' => ['nullable', 'string', 'max:255'],
+                'type' => ['nullable', Rule::in(array_keys($this->types))],
+                'stockStatus' => ['nullable', Rule::in(['lowStock', 'insufficientStock'])],
+            ],
+            [
+                'keyword.string' => ':attributes は文字列で入力してください。',
+                'keyword.max' => ':attributes は最大 :max 文字までです。',
+                'type.in' => ':attributes はプルダウンから選択してください。',
+                'stockStatus.in' => ':attributes はプルダウンから選択してください。',
+            ],
+            [
+                'keyword' => 'キーワード',
+                'type' => '商品種別',
+                'stockStatus' => '在庫状況',
+            ],
+        );
+
         // 初期化：置換後のキーワードを入れる変数
         $cleanedKeyword = '';
+        $selectedType = '';
+        $selectedStockStatus = '';
         // 削除されていない商品の中から
         $query = Item::query();
 
@@ -406,14 +428,16 @@ class ItemController extends Controller
 
         // 種別検索(種別が選択されていれば適用)
         if($request->filled('type')){
-            $query->where('type', '=', $request->input('type'));
+            $selectedType = $request->input('type');
+            $query->where('type', '=', $selectedType);
         }
 
         // 在庫状況フィルター(在庫状況が選択されていれば適用)
         if($request->filled('stockStatus')){
-            if($request->input('stockStatus') === 'lowStock'){
+            $selectedStockStatus = $request->input('stockStatus');
+            if($selectedStockStatus === 'lowStock'){
                 $query->where('stock_status', '=', 2);
-            }elseif($request->input('stockStatus') === 'insufficientStock'){
+            }elseif($selectedStockStatus === 'insufficientStock'){
                 $query->where('stock_status', '=', 3);
             }
         }
@@ -426,10 +450,10 @@ class ItemController extends Controller
         // セッションに検索条件を保存
         session([
             'searchKeyword' => $cleanedKeyword,
-            'searchType' => $request->input('type'),
-            'searchStockStatus' => $request->input('stockStatus')
+            'searchType' => $selectedType,
+            'searchStockStatus' => $selectedStockStatus
         ]);
         
-        return view('item.admin.index', compact('items', 'types', 'cleanedKeyword'));
+        return view('item.admin.index', compact('items', 'types', 'cleanedKeyword', 'selectedType', 'selectedStockStatus'));
     }
 }

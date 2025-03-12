@@ -68,7 +68,7 @@
                             <!-- キーワードを入力 -->
                             <div class="col-auto">
                                 <label class="sr-only" for="keyword">商品名または商品詳細</label>
-                                <input type="text" class="form-control mb-2 mr-sm-2" id="keyword" name="keyword" value="{{ old('keyword' , $cleanedKeyword ?? '') }}" placeholder="商品名 または 商品詳細" >
+                                <input type="text" class="form-control mb-2 mr-sm-2" id="keyword" name="keyword" value="{{ old('keyword', $cleanedKeyword ?? '') }}" placeholder="商品名 または 商品詳細" >
                                 <!-- エラーの詳細を表示 -->
                                 <div class="text-danger">
                                     @if($errors->has('keyword'))
