@@ -55,8 +55,8 @@
 
                             <!-- キーワードを入力 -->
                             <div class="col-auto">
-                                <label class="sr-only" for="keyword">商品名または商品詳細</label>
-                                <input type="text" class="form-control mb-2 mr-sm-2" id="keyword" name="keyword" value="{{ old('keyword', $cleanedKeyword ?? '') }}" placeholder="商品名 または 商品詳細" >
+                                <label class="sr-only" for="keyword">名前または詳細</label>
+                                <input type="text" class="form-control mb-2 mr-sm-2" id="keyword" name="keyword" value="{{ old('keyword', $cleanedKeyword ?? '') }}" placeholder="名前/詳細(255文字まで)" >
                             </div>
 
                             <!-- 検索ボタンとエラーメッセージを横並び -->
