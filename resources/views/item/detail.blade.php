@@ -54,9 +54,9 @@
                     </section>
                     <hr>
                     <section>
-                        <h4 class="mb-3">詳細情報</h4>
+                        <h4 class="mb-3">その他</h4>
                             <div class="col-md-10 mx-4">
-                                <label>説明</label>
+                                <label>詳細</label>
                                 <p class="card-text text-break ml-4 bg-light border p-2" style="min-height: 200px;">{!! nl2br(e($item->detail)) !!}</p>
                             </div>
                     </section>

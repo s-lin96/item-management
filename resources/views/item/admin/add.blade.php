@@ -117,10 +117,10 @@
                         </section>
                         <hr>
                         <section>
-                            <h4 class="mb-3">詳細情報</h4>
+                            <h4 class="mb-3">その他</h4>
                                 <div class="form-group mx-4">
                                     <label for="detail">
-                                        説明
+                                        詳細
                                         <span class="badge border border-danger text-danger">必須</span>
                                     </label>
                                     <textarea class="form-control col-md-10" id="detail" name="detail" placeholder="1~500文字で入力してください" cols="50" rows="10" max="500" required>{{ old('detail') }}</textarea>

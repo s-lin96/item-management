@@ -12,7 +12,7 @@
             <!-- フラッシュメッセージを表示：バリデーションエラー -->
             @if(count($errors) > 0)
                 <div class="alert alert-danger alert-dismissible fade show mx-auto text-center" role="alert">
-                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> 更新に失敗しました。入力欄のエラーををご確認ください。
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> 更新に失敗しました。入力欄のエラーをご確認ください。
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
