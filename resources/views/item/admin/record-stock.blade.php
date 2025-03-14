@@ -61,7 +61,7 @@
                                 数量
                                 <span class="badge border border-danger text-danger">必須</span>
                             </label>
-                            <input type="number" class="form-control" id="quantity" name="quantity" value="{{ old('quantity') }}" placeholder="1~4桁の数字を入力してください" min="0" max="9999" required>
+                            <input type="text" class="form-control" id="quantity" name="quantity" value="{{ old('quantity') }}" placeholder="1~4桁の数字を入力してください" min="1" max="9999" required>
                             <!-- エラーの詳細を表示 -->
                             <div class="text-danger">
                                 @if($errors->has('quantity'))

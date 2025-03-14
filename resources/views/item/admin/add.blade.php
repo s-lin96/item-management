@@ -70,7 +70,7 @@
                                             在庫数
                                             <span class="badge border border-danger text-danger">必須</span>
                                         </label>
-                                        <input type="number" class="form-control" id="stock" name="stock" value="{{ old('stock') }}" placeholder="1~4桁の数字を入力してください" min="0" max="9999" required>
+                                        <input type="text" class="form-control" id="stock" name="stock" value="{{ old('stock') }}" placeholder="1~4桁の数字を入力してください" min="1" max="9999" required>
                                         <!-- エラーの詳細を表示 -->
                                         <div class="text-danger">
                                             @if($errors->has('stock'))
@@ -105,7 +105,7 @@
                                         安定在庫数
                                         <span class="badge border border-danger text-danger">必須</span>
                                     </label>
-                                    <input type="number" class="form-control" id="safe_stock" name="safe_stock" value="{{ old('safe_stock') }}" placeholder="1~3桁の数字を入力してください" min="0" max="999" required>
+                                    <input type="text" class="form-control" id="safe_stock" name="safe_stock" value="{{ old('safe_stock') }}" placeholder="1~3桁の数字を入力してください" min="1" max="999" required>
                                     <!-- エラーの詳細を表示 -->
                                     <div class="text-danger">
                                         @if($errors->has('safe_stock'))

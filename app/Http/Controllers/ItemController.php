@@ -33,12 +33,12 @@ class ItemController extends Controller
         $this->validateRules = [
             'type' => ['bail', 'required', Rule::in(array_keys($this->types))],
             'name' => ['bail', 'required', 'string', 'max:100'],
-            'stock' => ['bail', 'required', 'numeric', 'digits_between:1,4'],
+            'stock' => ['bail', 'required', 'regex:/\A[1-9][0-9]{0,3}\z/'],
             'unit' => ['bail', 'required', Rule::in(array_keys($this->units))],
-            'safe_stock' => ['bail', 'required', 'numeric', 'digits_between:1,3'],
+            'safe_stock' => ['bail', 'required', 'regex:/\A[1-9][0-9]{0,2}\z/'],
             'detail' => ['bail', 'required', 'string', 'max:500'],
             'recordType' => ['bail', 'required', 'string'],
-            'quantity' => ['bail', 'required', 'numeric', 'digits_between:1,4']
+            'quantity' => ['bail', 'required', 'regex:/\A[1-9][0-9]{0,3}\z/']
         ];
 
         // バリデーションメッセージ(検索処理は別途付与)
@@ -49,21 +49,18 @@ class ItemController extends Controller
             'name.string' => ':attribute は文字列で入力してください。',
             'name.max' => ':attribute は最大 :max 文字です。',
             'stock.required' => ':attribute は必須項目です。',
-            'stock.numeric' => ':attribute は 数字で入力してください。',
-            'stock.digits_between' => ':attribute は :min ～ :max 桁で入力してください。',
+            'stock.regex' => ':attribute は先頭が 0 ではない数字を、1 ～ 4 桁で入力してください（負の数、小数は不可）。',
             'unit.required' => ':attribute は必須項目です。',
             'unit.in' => ':attribute はプルダウンから選択してください。',
             'safe_stock.required' => ':attribute は必須項目です。',
-            'safe_stock.numeric' => ':attribute は数字で入力してください。',
-            'safe_stock.digits_between' => ':attribute は :min ～ :max 桁で入力してください。',
+            'safe_stock.regex' => ':attribute は先頭が 0 ではない数字を、1 ～ 3 桁で入力してください（負の数、小数は不可）。',
             'detail.required' => ':attribute は必須項目です。',
             'detail.string' => ':attribute は文字列で入力してください。',
             'detail.max' => ':attribute は最大 :max 文字です。',
             'recordType.required' => ':attribute は必須項目です。',
             'recordType.string' => ':attribute は文字列で入力してください。',
             'quantity.required' => ':attribute は必須項目です。',
-            'quantity.numeric' => ':attribute は数字で入力してください。',
-            'quantity.digits_between' => ':attribute は :min ～ :max 桁で入力してください。',
+            'quantity.regex' => ':attribute は先頭が 0 ではない数字を、1 ～ 4 桁で入力してください（負の数、小数は不可）。',
         ];
 
         // 属性(検索処理は別途付与)
