@@ -39,7 +39,7 @@
                             <div class="d-flex">
                                 <div class="col-md-2 mx-4">
                                     <label>在庫数</label>
-                                    <p class="card-text text-right bg-light ml-4 border p-2">{{ $item->stock }}</p>
+                                    <p class="card-text text-right bg-light ml-4 border p-2">{{ number_format($item->stock) }}</p>
                                 </div>
 
                                 <div class="col-md-2 mx-4">

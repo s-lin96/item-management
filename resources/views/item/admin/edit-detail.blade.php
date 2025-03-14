@@ -76,7 +76,7 @@
                                 <div class="form-row">
                                     <div class="col-md-5 mx-4">
                                         <label for="stock">在庫数</label>
-                                        <p class="card-text bg-light border p-2">{{ $item->stock }}</p>  
+                                        <p class="card-text bg-light border p-2">{{ number_format($item->stock) }}</p>  
                                     </div>
 
                                     <div class="form-group col-md-5 mx-4">

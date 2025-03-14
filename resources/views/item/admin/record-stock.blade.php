@@ -7,7 +7,7 @@
     <p>
         <small>
             <i class="fa fa-info-circle" aria-hidden="true"></i>
-            現在庫: {{ $item->stock }} / 安全在庫: {{ $item->safe_stock }}
+            現在庫: {{ number_format($item->stock) }} / 安全在庫: {{ $item->safe_stock }}
         </small>
     </p>
     <hr>
