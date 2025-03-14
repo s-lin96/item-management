@@ -146,7 +146,6 @@ class ItemController extends Controller
         // バリデーションチェック実施
         $validatedData = $request->validate($validateRules, $this->validateMessages, $this->attributes);
 
-        // 【処理を再検討する！】そもそも安定在庫数より大きい場合は在庫状況は必ず“十分”になる？
         // 在庫数が安定在庫数より小さければ
         if($validatedData['stock'] < $validatedData['safe_stock']){
             // 商品登録フォームへリダイレクト
@@ -155,17 +154,9 @@ class ItemController extends Controller
                 ->withErrors([
                     'stock' => '在庫数は安定在庫数より多くなければなりません。'
                 ]);
-        }
-
-        // 新しい在庫状況を取得
-        if($validatedData['stock'] >= $validatedData['safe_stock']){
+        }else{
+            // 大きければ、在庫状況を「十分」とする
             $newStockStatus = 1;
-        }
-        elseif($validatedData['stock'] >= $validatedData['safe_stock'] * 0.7 && $validatedData['stock'] < $validatedData['safe_stock']){
-            $newStockStatus = 2;
-        }
-        else{
-            $newStockStatus = 3;
         }
 
         // DBに新規レコードを追加
