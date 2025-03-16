@@ -12,15 +12,15 @@ class UserController extends Controller
     protected $validateMessages;
     protected $attributes;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // /**
+    //  * Create a new controller instance.
+    //  *
+    //  * @return void
+    //  */
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
     /**
      * ユーザーアカウント一覧を表示（削除済み非表示）

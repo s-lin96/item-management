@@ -22,7 +22,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
 
         // 設定ファイル（種別・単位）の値をコンストラクタで取得
         $this->types = config('types.types');
