@@ -59,8 +59,12 @@ class HomeController extends Controller
     public function index()
     {
         // 在庫不足の商品を取得
-        $insufficientStockCount = Item::where('stock_status', '=', 3)->count();
-        $lowStockCount = Item::where('stock_status', '=', 2)->count();
+        $insufficientStockCount = Item::where('is_deleted', '=', 1)
+                                        ->where('stock_status', '=', 3)
+                                        ->count();
+        $lowStockCount = Item::where('is_deleted', '=', 1)
+                                ->where('stock_status', '=', 2)
+                                ->count();
 
         // 削除済み商品レコードを取得
         $deletedItems = Item::where('is_deleted', '=', 0)->get();
@@ -95,7 +99,9 @@ class HomeController extends Controller
      */
     public function showDetail($id)
     {
-        $item = Item::where('id', '=', $id)->first();
+        $item = Item::where('is_deleted', '=', 1)
+                        ->where('id', '=', $id)
+                        ->first();
 
         // 該当するidの商品レコードがなかったら
         if(!$item){
