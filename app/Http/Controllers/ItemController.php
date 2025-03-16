@@ -399,11 +399,11 @@ class ItemController extends Controller
             ],
         );
 
-        // 初期化：置換後のキーワードを入れる変数
+        // 初期化
         $cleanedKeyword = '';
         $selectedType = '';
         $selectedStockStatus = '';
-        // 削除されていない商品の中から
+        // すべての商品の中から
         $query = Item::query();
 
         // キーワード検索(キーワードがあれば適用)
