@@ -72,7 +72,7 @@
             <small class="text-muted">クイックアクセス</small>
         </h3>
     </div>
-    <div class="card-body overflow-auto" style="max-height: calc(100% - 56px);">
+    <div class="card-body" style="max-height: calc(100% - 56px);">
         <ul class="list-group list-group-flush">
             @foreach(config('types.types') as $id => $name)
                 <li class="list-group-item list-group-item-action">
