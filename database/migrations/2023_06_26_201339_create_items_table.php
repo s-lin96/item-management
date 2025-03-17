@@ -13,10 +13,15 @@ return new class extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->unsigned()->index();
-            $table->string('name', 100)->index();
-            $table->string('type', 100)->nullable();
-            $table->string('detail', 500)->nullable();
+            $table->foreignId('user_id')->constrained();
+            $table->string('name', 100);
+            $table->tinyInteger('is_deleted')->default(1)->unsigned();
+            $table->tinyInteger('type')->unsigned();
+            $table->text('detail', 500);
+            $table->integer('stock')->unsigned();
+            $table->integer('safe_stock')->unsigned();
+            $table->tinyInteger('stock_status')->unsigned();
+            $table->tinyInteger('unit')->unsigned();
             $table->timestamps();
         });
     }

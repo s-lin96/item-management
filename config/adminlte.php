@@ -293,7 +293,19 @@ return [
         [
             'text' => '商品一覧',
             'url'  => 'items',
-            'icon' => 'fas fa-gamepad',
+            'icon' => 'fa fa-table',
+        ],
+        [
+            'text' => '商品管理',
+            'url'  => 'items/admin',
+            'icon' => 'fa fa-cogs',
+            'can' => 'isAdmin',
+        ],
+        [
+            'text' => 'ユーザー管理',
+            'url'  => 'users',
+            'icon' => 'fa fa-users',
+            'can' => 'isAdmin',
         ],
 
         // AdminLTEデフォルト

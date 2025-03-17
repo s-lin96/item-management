@@ -14,8 +14,13 @@ class Item extends Model
     protected $fillable = [
         'user_id',
         'name',
+        'is_deleted',
         'type',
         'detail',
+        'stock',
+        'safe_stock',
+        'stock_status',
+        'unit'
     ];
 
     /**
@@ -33,4 +38,13 @@ class Item extends Model
      */
     protected $casts = [
     ];
+
+    /**
+     * 商品を保持するユーザー
+     *
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

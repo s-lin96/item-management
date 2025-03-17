@@ -19,8 +19,10 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'is_admin',
+        'is_deleted',
         'email',
-        'password',
+        'password'
     ];
 
     /**
@@ -42,4 +44,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * ユーザーが保持する全商品
+     *     
+     */
+    public function items()
+    {
+        return $this->hasMany(Item::class);
+    }
 }
