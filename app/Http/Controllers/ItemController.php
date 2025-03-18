@@ -49,18 +49,18 @@ class ItemController extends Controller
             'name.string' => ':attribute は文字列で入力してください。',
             'name.max' => ':attribute は最大 :max 文字です。',
             'stock.required' => ':attribute は必須項目です。',
-            'stock.regex' => ':attribute は先頭が 0 ではない数字を、1 ～ 4 桁で入力してください（負の数、小数は不可）。',
+            'stock.regex' => ':attribute は先頭が 0 ではない半角数字を、1 ～ 4 桁で入力してください（負の数、小数は不可）。',
             'unit.required' => ':attribute は必須項目です。',
             'unit.in' => ':attribute はプルダウンから選択してください。',
             'safe_stock.required' => ':attribute は必須項目です。',
-            'safe_stock.regex' => ':attribute は先頭が 0 ではない数字を、1 ～ 3 桁で入力してください（負の数、小数は不可）。',
+            'safe_stock.regex' => ':attribute は先頭が 0 ではない半角数字を、1 ～ 3 桁で入力してください（負の数、小数は不可）。',
             'detail.required' => ':attribute は必須項目です。',
             'detail.string' => ':attribute は文字列で入力してください。',
             'detail.max' => ':attribute は最大 :max 文字です。',
             'recordType.required' => ':attribute は必須項目です。',
             'recordType.string' => ':attribute は文字列で入力してください。',
             'quantity.required' => ':attribute は必須項目です。',
-            'quantity.regex' => ':attribute は先頭が 0 ではない数字を、1 ～ 4 桁で入力してください（負の数、小数は不可）。',
+            'quantity.regex' => ':attribute は先頭が 0 ではない半角数字を、1 ～ 4 桁で入力してください（負の数、小数は不可）。',
         ];
 
         // 属性(検索処理は別途付与)
