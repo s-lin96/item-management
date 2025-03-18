@@ -74,7 +74,7 @@
                             'stockStatus' => session('searchStockStatus')
                         ])
                     : route('items.table.readonly') }}" 
-                    class="btn btn-outline-secondary col-2">
+                    class="btn btn-outline-secondary col-2" role="button">
                         戻る
                     </a>
                 </div>

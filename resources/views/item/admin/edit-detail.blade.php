@@ -134,7 +134,7 @@
                         </section>
                 
                         <!-- 削除ボタン -->
-                        <a class="btn btn-danger btn-sm col-1" href="{{ route('item.delete', $item->id) }}">
+                        <a class="btn btn-danger btn-sm col-1" href="{{ route('item.delete', $item->id) }}" role="button">
                             削除 <i class="fa fa-trash" aria-hidden="true"></i>
                         </a>                        
                     </div>
@@ -151,7 +151,7 @@
                                 'stockStatus' => session('searchStockStatus')
                             ])
                         : route('items.table') }}" 
-                        class="btn btn-outline-secondary col-2">
+                        class="btn btn-outline-secondary col-2" role="button">
                             戻る
                         </a>
 

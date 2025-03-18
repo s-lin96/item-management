@@ -94,7 +94,7 @@
 
                     <!-- 戻る & 更新ボタン -->
                     <div class="card-footer d-flex justify-content-between">
-                        <a class="btn btn-outline-secondary col-2" href="{{ route('users.table') }}">戻る</a>
+                        <a class="btn btn-outline-secondary col-2" href="{{ route('users.table') }}" role="button">戻る</a>
                         <button type="submit" class="btn btn-primary col-2 ml-auto">更新</button>
                     </div>
                 </form>

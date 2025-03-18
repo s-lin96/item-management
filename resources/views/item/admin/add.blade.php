@@ -146,7 +146,7 @@
                                 'stockStatus' => session('searchStockStatus')
                             ])
                         : route('items.table') }}" 
-                        class="btn btn-outline-secondary col-2">
+                        class="btn btn-outline-secondary col-2" role="button">
                             戻る
                         </a>
                         
