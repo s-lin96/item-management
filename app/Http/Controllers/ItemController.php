@@ -189,6 +189,12 @@ class ItemController extends Controller
             return redirect()->route('items.table')
                 ->with('failure', '商品が見つかりませんでした。');
         }
+        
+        // 該当商品が削除されていたら
+        if($item->is_deleted === 0){
+            return redirect()->route('items.table')
+            ->with('failure', '削除された商品です。操作を行うには商品を復元する必要があります。');
+        }
 
         // 商品編集フォームを表示
         return view('item.admin.edit-detail', compact('item'));
@@ -305,6 +311,12 @@ class ItemController extends Controller
         if(!$item){
             return redirect()->route('items.table')
                 ->with('failure', '商品が見つかりませんでした。');
+        }
+        
+        // 該当商品が削除されていたら
+        if($item->is_deleted === 0){
+            return redirect()->route('items.table')
+            ->with('failure', '削除された商品です。操作を行うには商品を復元する必要があります。');
         }
 
         return view('item.admin.record-stock', compact('item'));
