@@ -64,9 +64,16 @@ class UserController extends Controller
         // idから更新対象のユーザーレコードを取得
         $user = User::where('id', '=', $id)->first();
 
+        // 対象のユーザーレコードがなかったら
         if(!$user){
             return redirect()->route('users.table')
                 ->with('failure', 'ユーザーが見つかりませんでした。');
+        }
+
+        // 対象ユーザーレコードが削除されていたら
+        if($user->is_deleted === 0){
+            return redirect()->route('users.table')
+                ->with('failure', '削除されたアカウントです。操作を行うにはアカウントを復元する必要があります。');
         }
 
         return view('user.edit-user', compact('user'));
