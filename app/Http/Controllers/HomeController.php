@@ -106,7 +106,7 @@ class HomeController extends Controller
         // 該当するidの商品レコードがなかったら
         if(!$item){
             return redirect()->route('items.table.readonly')
-                ->with('failure', '商品が見つかりませんでした。');
+                ->with('failure', '商品が見つかりませんでした。削除された商品である可能性があります。');
         }
 
         // 種別 & 単位リストをセット
