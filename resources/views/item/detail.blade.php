@@ -8,15 +8,6 @@
 
 @section('content')
     <div class="row">
-        <!-- フラッシュメッセージを表示：その他のエラー -->
-        @if(session('failure'))
-            <div class="alert alert-danger alert-dismissible fade show mx-auto text-center" role="alert">
-                <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ session('failure') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
         <div class="col-md-10">
             <div class="card card-primary">
                 <!-- 商品詳細セクション -->
