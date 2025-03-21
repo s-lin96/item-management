@@ -39,7 +39,7 @@
                                 </div>
                             </div>
                             <div class="col-md-2 mx-4 mt-4">
-                                <label>安定在庫数</label>
+                                <label>安全在庫数</label>
                                 <p class="card-text text-right ml-4 bg-light border p-2">{{ $item->safe_stock }}</p>
                             </div>
                     </section>

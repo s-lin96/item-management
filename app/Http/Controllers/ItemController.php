@@ -143,13 +143,13 @@ class ItemController extends Controller
         // バリデーションチェック実施
         $validatedData = $request->validate($validateRules, $this->validateMessages, $this->attributes);
 
-        // 在庫数が安定在庫数より小さければ
+        // 在庫数が安全在庫数より小さければ
         if($validatedData['stock'] < $validatedData['safe_stock']){
             // 商品登録フォームへリダイレクト
             return back()
                 ->withInput()
                 ->withErrors([
-                    'stock' => '在庫数は安定在庫数より多くなければなりません。'
+                    'stock' => '在庫数は安全在庫数より多くなければなりません。'
                 ]);
         }else{
             // 大きければ、在庫状況を「十分」とする
