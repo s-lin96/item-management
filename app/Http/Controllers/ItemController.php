@@ -379,7 +379,7 @@ class ItemController extends Controller
         $item->stock_status = $newStockStatus;
         $item->save();
 
-        return redirect()->route('items.table')->with('success', '入出庫が正常に記録されました');
+        return redirect()->route('items.table')->with('success', '入出庫が正常に記録されました。');
     }
 
     /**
