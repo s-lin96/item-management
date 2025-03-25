@@ -1,43 +1,51 @@
-## 商品管理システム
+# 商品管理システム MyITEM
 
-### 環境構築手順
+## 概要
+このシステムでは、小規模な店舗における商品在庫確認を行うための追加機能を実装しています。  
+在庫数や安全在庫数から在庫状況を自動表示、入出庫記録から在庫数の自動計算が行えます。
+また、商品情報を検索することもできます。  
+UIはメイン/サブアクションの色や配置に統一感をもたせ、ユーザーが直感的に操作できるよう工夫しています。
 
-* Gitクローン
-* .env.example をコピーして .env を作成
-* MySQLのデータベース作成（名前：item_management）
-* Macの場合 .env の DB_PASSWORD を root に修正（Windowsは修正不要）
+## 主な追加機能
+- ダッシュボード機能
+    - 在庫状況お知らせ欄
+    - 削除された商品リスト
+    - 商品種別クイックアクセス
+- 在庫管理機能
+    - 商品一覧表示
+    - 削除済み商品の表示 / 非表示切り替え
+    - 商品の登録、編集、削除
+    - 商品の復元
+    - 入出庫の記録
+- 検索機能
+    - 商品種別、在庫状況、キーワード検索
+- ユーザー管理機能
+    - アカウント一覧表示
+    ‐ アカウント情報の編集、削除
+    - アカウントの復元
+    - アカウントの権限切り替え
+- 権限管理・アクセス制御
+    - 認証・権限を必要とする操作や各画面へのアクセスを制御
 
-    ```INI
-    DB_PASSWORD=root
-    ```
+## 開発環境
+PHP 8.2.12  
+MySQL 10.4.32  
+Laravel 10  
 
-* APP_KEY生成
+## 設計書
+[設計書ページへ](https://drive.google.com/drive/folders/1EDt1Lk8S1q2ahgJNTyZ7-osVivJBZZfO?usp=drive_link)
 
-    ```console
-    php artisan key:generate
-    ```
+## システム閲覧
+[アプリケーションページへ](https://myitem-app-f8650c620bec.herokuapp.com/)
 
-* Composerインストール
-
-    ```console
-    composer install
-    ```
-
-* フロント環境構築
-
-    ```console
-    npm ci
-    npm run build
-    ```
-
-* マイグレーション
-
-    ```console
-    php artisan migrate
-    ```
-
-* 起動
-
-    ```console
-    php artisan serve
-    ```
+### テストアカウント情報
+**> 管理者アカウント**
+```
+メールアドレス: admin@tech.com
+パスワード: Admin@1234
+```
+**> 一般ユーザーアカウント**
+```
+メールアドレス: test_user2@tech.com
+パスワード: Password2
+```
