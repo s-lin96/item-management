@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
 use Illuminate\Validation\Rule;
 use Illuminate\Database\Eloquent\Builder;
+use App\Services\StockStatusJudger;
 
 class ItemController extends Controller
 {
@@ -222,16 +223,28 @@ class ItemController extends Controller
         // バリデーションチェックを実施
         $validatedData = $request->validate($validateRules, $this->validateMessages, $this->attributes);
 
-        // 新しい在庫状況を取得
-        if($item->stock >= $validatedData['safe_stock']){
-            $newStockStatus = 1;
-        }
-        elseif($item->stock >= $validatedData['safe_stock'] * 0.7 && $item->stock < $validatedData['safe_stock']){
-            $newStockStatus = 2;
-        }
-        else{
-            $newStockStatus = 3;
-        }
+        // ==============================
+        // [OOP版]：在庫状況判定ロジック
+        // ==============================
+        // 在庫状況を判定するためのインスタンスを生成 
+        $judger = new StockStatusJudger();
+        // 在庫状況の判定結果を新しい在庫状況としてセット
+        $newStockStatus = $judger->judge($item->stock, $validatedData['safe_stock']);
+
+        // ==============================
+        // [OLD版]：在庫状況判定ロジック(比較用に残す)
+        // ==============================        
+        // // 新しい在庫状況を取得
+        // if($item->stock >= $validatedData['safe_stock']){
+        //     $newStockStatus = 1;
+        // }
+        // elseif($item->stock >= $validatedData['safe_stock'] * 0.7 && $item->stock < $validatedData['safe_stock']){
+        //     $newStockStatus = 2;
+        // }
+        // else{
+        //     $newStockStatus = 3;
+        // }
+        // ====== ↑ 旧コードここまで ======
 
         // カラム名 -> バリデーション済み入力値をセット
         $item->user_id = Auth::id(); 
