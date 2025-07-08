@@ -375,16 +375,28 @@ class ItemController extends Controller
             }
         }
 
-        // 新しい在庫状況を取得
-        if($newStock >= $item->safe_stock){
-            $newStockStatus = 1; // 十分
-        }
-        elseif($newStock >= $item->safe_stock * 0.7 && $newStock < $item->safe_stock){
-            $newStockStatus = 2; // 少なめ
-        }
-        else{
-            $newStockStatus = 3; // 不足
-        }
+        // ==============================
+        // [OOP版]：在庫状況判定ロジック
+        // ==============================
+        // 在庫状況を判定するためのインスタンスを生成 
+        $judger = new StockStatusJudger();
+        // 在庫状況の判定結果を新しい在庫状況としてセット
+        $newStockStatus = $judger->judge($newStock, $item->safe_stock);
+
+        // ==============================
+        // [OLD版]：在庫状況判定ロジック(比較用に残す)
+        // ==============================  
+        // // 新しい在庫状況を取得
+        // if($newStock >= $item->safe_stock){
+        //     $newStockStatus = 1; // 十分
+        // }
+        // elseif($newStock >= $item->safe_stock * 0.7 && $newStock < $item->safe_stock){
+        //     $newStockStatus = 2; // 少なめ
+        // }
+        // else{
+        //     $newStockStatus = 3; // 不足
+        // }
+        // ====== ↑ 旧コードここまで ======
 
         // DBに変更を保存
         $item->user_id = Auth::id();
