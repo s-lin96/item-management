@@ -49,3 +49,7 @@ Laravel 10
 メールアドレス: test_user2@tech.com
 パスワード: Password2
 ```
+
+## 補足情報
+- `feature-opp-refactor`ブランチは、オブジェクト指向の学習用に作成したものになります。  
+※mainブランチへのコミット無し
